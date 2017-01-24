@@ -1,0 +1,27 @@
+{
+  "name": "ucassh/joeapi",
+  "description": "Joe Monster site API",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Łukasz Kaczmarek",
+      "email": "lukasz.s.kaczmarek@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "guzzlehttp/guzzle": "~6.0",
+    "pimple/pimple": "^3.0",
+    "sunra/php-simple-html-dom-parser": "1.5.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": ">=4.8 < 6.0"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/",
+      "Joe\\": "src/"
+    }
+  }
+}
