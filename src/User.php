@@ -29,8 +29,8 @@ class User
 
         $collection = new \ArrayObject();
         foreach ($html->find('.avatar') as $element) {
-            $link = $element->firstChild();
-            $id = substr($link, strrpos($link, '/'));
+            $link = $element->firstChild()->href;
+            $id = substr($link, strrpos($link, '/') +1);
 
             $div = $element->find('div');
             $since = $div[0]->title;
@@ -58,5 +58,13 @@ class User
     public function setClient($client)
     {
         $this->client = $client;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function Id()
+    {
+        return $this->id;
     }
 }
