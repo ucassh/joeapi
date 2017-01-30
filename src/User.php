@@ -44,6 +44,42 @@ class User
         return $collection;
     }
 
+    public function comments()
+    {
+        $res = $this->client->request('GET', Connection::ADDRESS . '/bojownik/' . $this->id . '/komentarze');
+        $content = $res->getBody();
+        $lines = preg_split("/\n/", $content);
+        $commentsLine = '';
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if ('comment_js' == substr($line, 0, 10)) {
+                $commentsLine = substr($line, 11);
+                $commentsLine = trim($commentsLine, " =;");
+                break;
+            }
+        }
+
+        $comments = json_decode($commentsLine, true);
+        $collection = new \ArrayObject;
+        foreach ($comments['comments'] as $commentId => &$comment) {
+            $commBody = HtmlDomParser::str_get_html($comment['maincomment']['html']);
+
+            $notOkNode = $commBody->find('.commok2 a');
+            $notOkCount = isset($notOkNode[0]) ? (int)trim($notOkNode[0]->text()) : 0;
+            $message = trim($commBody->find('.commentDesc span')[0]->text());
+            $links = $commBody->find('.commentBoxHeader a');
+
+            $comment['maincomment']['link'] = $links[count($links)-1]->href;
+            $comment['maincomment']['user'] = $this;
+            $comment['maincomment']['notOkCount'] = $notOkCount;
+            $comment['maincomment']['html'] = $message;
+
+            $collection->append(CommentFactory::create($comment['maincomment']));
+        }
+
+        return $collection;
+    }
+
     /**
      * @return mixed
      */
@@ -63,7 +99,7 @@ class User
     /**
      * @return mixed
      */
-    public function Id()
+    public function id()
     {
         return $this->id;
     }
