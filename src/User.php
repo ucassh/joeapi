@@ -80,6 +80,41 @@ class User
         return $collection;
     }
 
+    public function about()
+    {
+
+    }
+
+    public function sended()
+    {
+
+    }
+
+    public function wardrobe()
+    {
+
+    }
+
+    public function fanOf()
+    {
+
+    }
+
+    public function clubs()
+    {
+
+    }
+
+    public function blog()
+    {
+
+    }
+
+    public function subscriptions()
+    {
+
+    }
+
     /**
      * @return mixed
      */
