@@ -58,6 +58,9 @@ class User
                 break;
             }
         }
+        if ($commentsLine == '') {
+            throw new \Exception('No comments found. Probably You are not logged in.');
+        }
 
         $comments = json_decode($commentsLine, true);
         $collection = new \ArrayObject;
