@@ -69,6 +69,9 @@ class User
 
             $notOkNode = $commBody->find('.commok2 a');
             $notOkCount = isset($notOkNode[0]) ? (int)trim($notOkNode[0]->text()) : 0;
+            if (!isset($notOkNode[0])) {
+                Log::alert("Node not found - new structure!", [$comment['maincomment']['html']]);
+            }
             $message = trim($commBody->find('.commentDesc span')[0]->text());
             $links = $commBody->find('.commentBoxHeader a');
 
