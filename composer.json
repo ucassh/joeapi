@@ -13,7 +13,8 @@
     "php": ">=5.5.0",
     "guzzlehttp/guzzle": "~6.0",
     "pimple/pimple": "^3.0",
-    "sunra/php-simple-html-dom-parser": "1.5.2"
+    "sunra/php-simple-html-dom-parser": "1.5.2",
+    "katzgrau/klogger": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": ">=4.8 < 6.0"
