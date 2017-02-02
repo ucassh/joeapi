@@ -68,4 +68,18 @@ class UserTest extends TestsAbstract
         $this->assertSame("art", $comment[1]->getType(), "Type read incorrect");
         $this->assertSame(1, $comment[1]->getToplevel(), "TopLevel read incorrect");
     }
+
+    /**
+     * @expectedException        \Exception
+     * @expectedExceptionMessage No comments found. Probably You are not logged in.
+     */
+    public function testGetUserCommentsButNoCommentsFound()
+    {
+        $response = $this->mockResponse('');
+        $client = $this->mockClient($response);
+
+        $user = new User('taksobietestuje');
+        $user->setClient($client);
+        $user->comments();
+    }
 }
