@@ -8,14 +8,14 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 class User
 {
-    private $id;
+    private $nickName;
 
     /** @var Client $client */
     private $client;
 
-    public function __construct($id)
+    public function __construct($nickName)
     {
-        $this->id = $id;
+        $this->nickName = $nickName;
         $this->client = Connection::client();
     }
 
@@ -24,7 +24,7 @@ class User
      */
     public function fans()
     {
-        $res = $this->client->request('GET', Connection::ADDRESS . '/bojownik/' . $this->id . '/fani');
+        $res = $this->client->request('GET', Connection::ADDRESS . '/bojownik/' . $this->nickName . '/fani');
         $body = $res->getBody();
         $html = HtmlDomParser::str_get_html($body);
 
@@ -47,7 +47,7 @@ class User
 
     public function comments()
     {
-        $res = $this->client->request('GET', Connection::ADDRESS . '/bojownik/' . $this->id . '/komentarze');
+        $res = $this->client->request('GET', Connection::ADDRESS . '/bojownik/' . $this->nickName . '/komentarze');
         $content = $res->getBody();
         $lines = preg_split("/\n/", $content);
         $commentsLine = '';
@@ -90,7 +90,7 @@ class User
     //TODO refactor method to class
     public function about()
     {
-        $res = $this->client->request('GET', Connection::ADDRESS . '/bojownik/' . $this->id);
+        $res = $this->client->request('GET', Connection::ADDRESS . '/bojownik/' . $this->nickName);
         $body = $res->getBody();
         $html = HtmlDomParser::str_get_html($body);
 
@@ -181,9 +181,9 @@ class User
     /**
      * @return mixed
      */
-    public function id()
+    public function nickName()
     {
-        return $this->id;
+        return $this->nickName;
     }
 
     /**

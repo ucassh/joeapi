@@ -23,7 +23,7 @@ class UserTest extends TestsAbstract
             $this->assertSame($user, $fan->whom(), "Fan instance should be a fan of User instance");
         }
 
-        $this->assertEquals("onlyonefan", $fan->id(), "Fan ID mismatch");
+        $this->assertEquals("onlyonefan", $fan->nickName(), "Fan nickname mismatch");
 
         $fanSince = $fan->since()->format("Y-m-d H:i:s");
         $this->assertEquals("2015-06-11 20:58:15", $fanSince, 'Incorrect \'became a fan\' time ');

@@ -11,16 +11,16 @@ class Fan extends User
     private $whom;
 
     /**
-     * @param $id
+     * @param $nickName
      * @param User $user
      * @param \DateTime $since
      */
-    public function __construct($id, User $user, \DateTime $since = null)
+    public function __construct($nickName, User $user, \DateTime $since = null)
     {
         $this->whom = $user;
         $this->since = $since;
 
-        parent::__construct($id);
+        parent::__construct($nickName);
     }
 
     /**
