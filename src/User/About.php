@@ -14,6 +14,9 @@ class About
 
     private $user;
 
+    /** @var $profilLeft simple_html_dom_node[] */
+    private $about;
+
     public function __construct(User $user)
     {
         $this->user = $user;
@@ -22,29 +25,17 @@ class About
 
     public function getAllData()
     {
-
-        $res = $this->client->request('GET', Connection::ADDRESS . '/bojownik/' . $this->user->nickName());
-        $body = $res->getBody();
-        $html = HtmlDomParser::str_get_html($body);
-
-        $profilLeft = $html->find('div.profilLeft');
-
-        if (!isset($profilLeft[0])) {
-            throw new \Exception('Object containing informations was not found.');
-        }
-
-        $about = $profilLeft[0];
-        $innerText = $profilLeft[0]->innertext();
+        $this->prepareAboutDOM();
 
         $content = [];
-        $content['hello'] = strip_tags(substr($innerText, 0, strpos($innerText, '<dl>')));
+        $content['hello'] = $this->getHelloMessage($content);
 
-        $dls = $about->find('dl');
+        $dls = $this->about->find('dl');
         if (isset($dls[0])) {
             $content['Main'] = $this->getPropertiesFromDl($dls[0]);
         }
 
-        $headers = $about->find('h3');
+        $headers = $this->about->find('h3');
         foreach ($headers as $h) {
             $block = $h->text();
             /** @var $dl simple_html_dom_node */
@@ -57,12 +48,17 @@ class About
             }
         }
 
-        $scripts = $about->find('script');
+        $scripts = $this->about->find('script');
         if (isset($scripts[1])) {
             $content['place'] = str_replace(';', ";\n", $scripts[1]->innertext());
         }
 
         return $content;
+    }
+
+    public function getHelloInfo()
+    {
+
     }
 
 
@@ -82,5 +78,36 @@ class About
             }
         }
         return $content;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    protected function prepareAboutDOM()
+    {
+        if (empty($this->about)) {
+            $res = $this->client->request('GET', Connection::ADDRESS . '/bojownik/' . $this->user->nickName());
+            $body = $res->getBody();
+            $html = HtmlDomParser::str_get_html($body);
+
+            /** @var $profilLeft simple_html_dom_node[] */
+            $profilLeft = $html->find('div.profilLeft');
+
+            if (!isset($profilLeft[0])) {
+                throw new \Exception('Object containing informations was not found.');
+            }
+
+            $this->about = $profilLeft[0];
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getHelloMessage()
+    {
+        $this->prepareAboutDOM();
+        $innerText = $this->about->innertext();
+        return strip_tags(substr($innerText, 0, strpos($innerText, '<dl>')));
     }
 }
