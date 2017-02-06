@@ -29,15 +29,9 @@ class About
 
         $content = [];
         $content['hello'] = $this->getHelloMessage();
-
         $content['Basic'] = $this->getBasicInfo();
-
         $content = array_merge($content, $this->getCategorisedInfo());
-
-        $scripts = $this->about->find('script');
-        if (isset($scripts[1])) {
-            $content['place'] = str_replace(';', ";\n", $scripts[1]->innertext());
-        }
+        $content['place'] = $this->getLocalization();
 
         return $content;
     }
@@ -105,7 +99,6 @@ class About
     }
 
     /**
-     * @param $content
      * @return mixed
      */
     protected function getCategorisedInfo()
@@ -124,5 +117,17 @@ class About
             }
         }
         return $content;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getLocalization()
+    {
+        $scripts = $this->about->find('script');
+        if (isset($scripts[1])) {
+            return  str_replace(';', ";\n", $scripts[1]->innertext());
+        }
+        return '';
     }
 }
