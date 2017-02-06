@@ -30,10 +30,7 @@ class About
         $content = [];
         $content['hello'] = $this->getHelloMessage($content);
 
-        $dls = $this->about->find('dl');
-        if (isset($dls[0])) {
-            $content['Main'] = $this->getPropertiesFromDl($dls[0]);
-        }
+        $content['Basic'] = $this->getBasicInfo();
 
         $headers = $this->about->find('h3');
         foreach ($headers as $h) {
@@ -104,10 +101,23 @@ class About
     /**
      * @return mixed
      */
-    protected function getHelloMessage()
+    public function getHelloMessage()
     {
         $this->prepareAboutDOM();
         $innerText = $this->about->innertext();
         return strip_tags(substr($innerText, 0, strpos($innerText, '<dl>')));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBasicInfo()
+    {
+        $this->prepareAboutDOM();
+        $dls = $this->about->find('dl');
+        if (isset($dls[0])) {
+            return $this->getPropertiesFromDl($dls[0]);
+        }
+        return '';
     }
 }
