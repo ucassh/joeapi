@@ -28,22 +28,11 @@ class About
         $this->prepareAboutDOM();
 
         $content = [];
-        $content['hello'] = $this->getHelloMessage($content);
+        $content['hello'] = $this->getHelloMessage();
 
         $content['Basic'] = $this->getBasicInfo();
 
-        $headers = $this->about->find('h3');
-        foreach ($headers as $h) {
-            $block = $h->text();
-            /** @var $dl simple_html_dom_node */
-            $dl = $h->next_sibling();
-
-            if ($dl->tag == 'dl') {
-                $content[$block] = $this->getPropertiesFromDl($dl);
-            } else {
-                Log::info('Exception was found', [$dl->outertext()]);
-            }
-        }
+        $content = array_merge($content, $this->getCategorisedInfo());
 
         $scripts = $this->about->find('script');
         if (isset($scripts[1])) {
@@ -52,12 +41,6 @@ class About
 
         return $content;
     }
-
-    public function getHelloInfo()
-    {
-
-    }
-
 
     /**
      * @param $dl
@@ -119,5 +102,27 @@ class About
             return $this->getPropertiesFromDl($dls[0]);
         }
         return '';
+    }
+
+    /**
+     * @param $content
+     * @return mixed
+     */
+    protected function getCategorisedInfo()
+    {
+        $content = [];
+        $headers = $this->about->find('h3');
+        foreach ($headers as $h) {
+            $block = $h->text();
+            /** @var $dl simple_html_dom_node */
+            $dl = $h->next_sibling();
+
+            if ($dl->tag == 'dl') {
+                $content[$block] = $this->getPropertiesFromDl($dl);
+            } else {
+                Log::info('Exception was found', [$dl->outertext()]);
+            }
+        }
+        return $content;
     }
 }
