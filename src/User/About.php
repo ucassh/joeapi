@@ -101,7 +101,7 @@ class About
     /**
      * @return mixed
      */
-    protected function getCategorisedInfo()
+    public function getCategorisedInfo()
     {
         $content = [];
         $headers = $this->about->find('h3');
@@ -122,7 +122,7 @@ class About
     /**
      * @return mixed
      */
-    protected function getLocalization()
+    public function getLocalization()
     {
         $scripts = $this->about->find('script');
         if (isset($scripts[1])) {
