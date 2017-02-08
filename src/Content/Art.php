@@ -37,10 +37,12 @@ class Art
 
     /**
      * @param mixed $author
+     * @return Art
      */
     public function setAuthor($author)
     {
         $this->author = $author;
+        return $this;
     }
 
     /**
@@ -53,10 +55,12 @@ class Art
 
     /**
      * @param mixed $link
+     * @return Art
      */
     public function setLink($link)
     {
         $this->link = $link;
+        return $this;
     }
 
     /**
@@ -69,10 +73,12 @@ class Art
 
     /**
      * @param mixed $id
+     * @return Art
      */
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
     }
 
     /**
@@ -85,10 +91,12 @@ class Art
 
     /**
      * @param mixed $thumbnail
+     * @return Art
      */
     public function setThumbnail($thumbnail)
     {
         $this->thumbnail = $thumbnail;
+        return $this;
     }
 
     /**
@@ -101,10 +109,12 @@ class Art
 
     /**
      * @param mixed $title
+     * @return Art
      */
     public function setTitle($title)
     {
         $this->title = $title;
+        return $this;
     }
 
     /**
@@ -117,10 +127,12 @@ class Art
 
     /**
      * @param mixed $snippetMsg
+     * @return Art
      */
     public function setSnippetMsg($snippetMsg)
     {
         $this->snippetMsg = $snippetMsg;
+        return $this;
     }
 
     /**
@@ -133,10 +145,12 @@ class Art
 
     /**
      * @param mixed $viewsFromSnippet
+     * @return Art
      */
     public function setViewsFromSnippet($viewsFromSnippet)
     {
         $this->viewsFromSnippet = $viewsFromSnippet;
+        return $this;
     }
 
     /**
@@ -149,10 +163,12 @@ class Art
 
     /**
      * @param mixed $viewsOnPage
+     * @return Art
      */
     public function setViewsOnPage($viewsOnPage)
     {
         $this->viewsOnPage = $viewsOnPage;
+        return $this;
     }
 
     /**
@@ -165,10 +181,12 @@ class Art
 
     /**
      * @param mixed $addingTimeFromSnippet
+     * @return Art
      */
     public function setAddingTimeFromSnippet($addingTimeFromSnippet)
     {
         $this->addingTimeFromSnippet = $addingTimeFromSnippet;
+        return $this;
     }
 
     /**
@@ -181,10 +199,12 @@ class Art
 
     /**
      * @param mixed $addingTimeOnPage
+     * @return Art
      */
     public function setAddingTimeOnPage($addingTimeOnPage)
     {
         $this->addingTimeOnPage = $addingTimeOnPage;
+        return $this;
     }
 
     /**
@@ -197,10 +217,12 @@ class Art
 
     /**
      * @param mixed $okCountFromSnippet
+     * @return Art
      */
     public function setOkCountFromSnippet($okCountFromSnippet)
     {
         $this->okCountFromSnippet = $okCountFromSnippet;
+        return $this;
     }
 
     /**
@@ -213,10 +235,12 @@ class Art
 
     /**
      * @param mixed $okCountOnPage
+     * @return Art
      */
     public function setOkCountOnPage($okCountOnPage)
     {
         $this->okCountOnPage = $okCountOnPage;
+        return $this;
     }
 
     /**
@@ -229,10 +253,12 @@ class Art
 
     /**
      * @param mixed $artContent
+     * @return Art
      */
     public function setArtContent($artContent)
     {
         $this->artContent = $artContent;
+        return $this;
     }
 
     /**
@@ -245,10 +271,12 @@ class Art
 
     /**
      * @param mixed $fullDescription
+     * @return Art
      */
     public function setFullDescription($fullDescription)
     {
         $this->fullDescription = $fullDescription;
+        return $this;
     }
 
     /**
@@ -261,10 +289,12 @@ class Art
 
     /**
      * @param mixed $notOkCount
+     * @return Art
      */
     public function setNotOkCount($notOkCount)
     {
         $this->notOkCount = $notOkCount;
+        return $this;
     }
 
     /**
@@ -277,9 +307,11 @@ class Art
 
     /**
      * @param mixed $tags
+     * @return Art
      */
     public function setTags($tags)
     {
         $this->tags = $tags;
+        return $this;
     }
 }
