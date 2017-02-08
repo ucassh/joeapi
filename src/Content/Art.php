@@ -14,6 +14,7 @@ class Art
     private $viewsFromSnippet;
     private $viewsOnPage;
     private $addingTimeFromSnippet;
+    private $addingDateFromSnippet;
     private $addingTimeOnPage;
     private $okCountFromSnippet;
     private $okCountOnPage;
@@ -314,4 +315,23 @@ class Art
         $this->tags = $tags;
         return $this;
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getAddingDateFromSnippet()
+    {
+        return $this->addingDateFromSnippet;
+    }
+
+    /**
+     * @param \DateTime $addingDateFromSnippet
+     * @return Art
+     */
+    public function setAddingDateFromSnippet(\DateTime $addingDateFromSnippet)
+    {
+        $this->addingDateFromSnippet = $addingDateFromSnippet;
+        return $this;
+    }
+
 }
