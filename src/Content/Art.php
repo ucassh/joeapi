@@ -18,6 +18,7 @@ class Art
     private $addingTimeOnPage;
     private $okCountFromSnippet;
     private $okCountOnPage;
+    private $commentsCountFromSnippet;
     private $artContent;
     private $fullDescription;
     private $notOkCount;
@@ -331,6 +332,24 @@ class Art
     public function setAddingDateFromSnippet(\DateTime $addingDateFromSnippet)
     {
         $this->addingDateFromSnippet = $addingDateFromSnippet;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCommentsCountFromSnippet()
+    {
+        return $this->commentsCountFromSnippet;
+    }
+
+    /**
+     * @param mixed $commentsCountFromSnippet
+     * @return Art
+     */
+    public function setCommentsCountFromSnippet($commentsCountFromSnippet)
+    {
+        $this->commentsCountFromSnippet = $commentsCountFromSnippet;
         return $this;
     }
 

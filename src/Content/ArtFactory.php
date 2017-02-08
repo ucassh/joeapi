@@ -16,6 +16,7 @@ class ArtFactory
             ->setAuthor($params['author'])
             ->setLink($params['link'])
             ->setOkCountFromSnippet($params['ok_count'])
+            ->setCommentsCountFromSnippet($params['comments_count'])
             ->setSnippetMsg($params['snippet_msg'])
             ->setThumbnail($params['thumbnail'])
             ->setTitle($params['title'])
