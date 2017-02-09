@@ -4,6 +4,7 @@ namespace Joe;
 
 use Joe\Http\Client;
 use Joe\User\About;
+use Joe\User\SendedContent;
 use simplehtmldom_1_5\simple_html_dom_node;
 use Sunra\PhpSimple\HtmlDomParser;
 
@@ -16,6 +17,9 @@ class User
 
     /** @var  About $about */
     private $about;
+
+    /** @var  SendedContent $sended */
+    private $sended;
 
     public function __construct($nickName)
     {
@@ -101,7 +105,10 @@ class User
 
     public function sended()
     {
-
+        if (is_null($this->sended)) {
+            $this->sended = new SendedContent($this);
+        }
+        return $this->sended;
     }
 
     public function wardrobe()
