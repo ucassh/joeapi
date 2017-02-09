@@ -42,6 +42,20 @@ class SendedContent
         return $collection;
     }
 
+    public function artPagesQuantity()
+    {
+        /** @var Response $res */
+        $res = $this->client->request(
+            'GET',
+            Connection::ADDRESS . '/bojownik/' . $this->user->nickName() . '/nadeslane/arty/1'
+        );
+
+        $body = $res->getBody();
+        $html = HtmlDomParser::str_get_html($body);
+        $pages = $html->find('.pagerNav');
+        return is_array($pages) ? trim($pages[count($pages) - 1]->text(), '[]') : 0;
+    }
+
     /**
      * @param simple_html_dom_node $node
      * @return array
