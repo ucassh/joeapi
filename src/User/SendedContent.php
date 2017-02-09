@@ -43,33 +43,31 @@ class SendedContent
     }
 
     /**
-     * TODO to be refactored and added conditions in case of !isset
      * @param simple_html_dom_node $node
      * @return array
      */
     protected function extractDataFromListingEntry(simple_html_dom_node $node)
     {
         $link = $node->find('a.itemTitle');
-        $params = [];
-        $params['author'] = $this->user;
-        $params['title'] = trim($link[0]->text());
-        $params['link'] = $link[0]->href;
-        $beginOfIf = substr($params['link'], 5);
-        $params['id'] = substr($beginOfIf, 0, strpos($beginOfIf, '/'));
+        $href = isset($link[0]) ? $link[0]->href : '';
+        $beginOfIf = substr($href, 5);
         $description = $node->find('.user-item-description');
-        $params['snippet_msg'] = trim($description[0]->text());
         $img = $node->find('img.itemBigThumb');
-        $params['thumbnail'] = $img[0]->src;
         $addTime = $node->find('div.small span');
-        $params['time'] = trim($addTime[1]->text());
-        $params['date'] = new \DateTime($addTime[1]->getAttribute('title'));
         $counts = $node->find('div.small b');
-
-        $counts = array_map('trim', explode('&middot;',$counts[0]->text()));
-        $params['ok_count'] = $counts[0];
-        $params['views_count'] = $counts[1];
-        $params['comments_count'] = $counts[2];
-        return $params;
+        $counts = isset($counz[0]) ? array_map('trim', explode('&middot,', $counts[0]->text())) : ['', '', ''];
+        return [
+            'author' => $this->user,
+            'title' => isset($link[0]) ? trim($link[0]->text()) : '',
+            'link' => isset($link[0]) ? $link[0]->href : '',
+            'id' => substr($beginOfIf, 0, strpos($beginOfIf, '/')),
+            'snippet_msg' => isset($description[0]) ? trim($description[0]->text()) : '',
+            'thumbnail' => isset($img[0]) ? $img[0]->src : '',
+            'time' => isset($addTime[1]) ? trim($addTime[1]->text()) : '',
+            'date' => new \DateTime(isset($addTime[1]) ? $addTime[1]->getAttribute('title') : null),
+            'ok_count' => $counts[0],
+            'views_count' => $counts[1],
+            'comments_count' => $counts[2]
+        ];
     }
-
 }
