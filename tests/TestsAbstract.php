@@ -4,6 +4,7 @@ namespace Tests;
 
 use Joe\Http\Client;
 use Joe\Http\Response;
+use Joe\User;
 
 abstract class TestsAbstract extends \PHPUnit_Framework_TestCase
 {
@@ -42,5 +43,26 @@ abstract class TestsAbstract extends \PHPUnit_Framework_TestCase
             ->method('request')
             ->willReturn($response);
         return $client;
+    }
+
+    /**
+     * @param $client
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockUser($client)
+    {
+        $user = $this->getMockBuilder(User::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getClient', 'nickName'])
+            ->getMock();
+        $user
+            ->expects($this->any())
+            ->method('getClient')
+            ->willReturn($client);
+        $user
+            ->expects($this->any())
+            ->method('nickName')
+            ->willReturn('taksobietestuje');
+        return $user;
     }
 }
