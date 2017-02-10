@@ -4,10 +4,8 @@ namespace Joe\User;
 
 use Joe\Connection;
 use Joe\Content\ArtFactory;
-use Joe\Http\Response;
 use Joe\User;
 use simplehtmldom_1_5\simple_html_dom_node;
-use Sunra\PhpSimple\HtmlDomParser;
 
 class SendedContent
 {
@@ -23,13 +21,7 @@ class SendedContent
 
     public function getArticlesPage($page = 1)
     {
-        /** @var Response $res */
-        $res = $this->client->request(
-            'GET',
-            Connection::ADDRESS . '/bojownik/' . $this->user->nickName() . '/nadeslane/arty/' . $page
-        );
-        $body = $res->getBody();
-        $html = HtmlDomParser::str_get_html($body);
+        $html = $this->getPage(Connection::ADDRESS . '/bojownik/' . $this->user->nickName() . '/nadeslane/arty/' . $page);
         $arts = $html->find('.user-item-wrapper');
 
         $collection = new \ArrayObject();
@@ -44,14 +36,7 @@ class SendedContent
 
     public function artPagesQuantity()
     {
-        /** @var Response $res */
-        $res = $this->client->request(
-            'GET',
-            Connection::ADDRESS . '/bojownik/' . $this->user->nickName() . '/nadeslane/arty/1'
-        );
-
-        $body = $res->getBody();
-        $html = HtmlDomParser::str_get_html($body);
+        $html = $this->getPage(Connection::ADDRESS . '/bojownik/' . $this->user->nickName() . '/nadeslane/arty/1');
         $pages = $html->find('.pagerNav');
         return is_array($pages) ? trim($pages[count($pages) - 1]->text(), '[]') : 0;
     }
