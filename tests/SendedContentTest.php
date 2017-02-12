@@ -42,6 +42,16 @@ class SendedContentTest extends TestsAbstract
         $this->assertEquals('/art/38744/8_kobiet_ktore_sa_wdzieczne_za_kazdy_kilogram_swojego_ciala', $artArr[0]->getLink());
     }
 
+    public function testArtPagesQuantityButBoPagesInListing()
+    {
+        $response = $this->mockResponse(file_get_contents('tests/files/empty_articles_list.html'));
+        $client = $this->mockClient($response);
+        $user = $this->mockUser($client);
+
+        $sended = new SendedContent($user);
+        $this->assertEquals(0, $sended->artPagesQuantity());
+    }
+
     public function testGetArticlesPageCountButBothingFound()
     {
         $response = $this->mockResponse(file_get_contents('tests/files/empty_articles_list.html'));
