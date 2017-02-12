@@ -40,6 +40,16 @@ class SendedContentTest extends TestsAbstract
         $this->assertEquals('8 kobiet, które są wdzięczne za każdy kilogram swojego ciała', $artArr[0]->getTitle());
         $this->assertEquals(102755, $artArr[0]->getViewsFromSnippet());
         $this->assertEquals('/art/38744/8_kobiet_ktore_sa_wdzieczne_za_kazdy_kilogram_swojego_ciala', $artArr[0]->getLink());
+    }
 
+    public function testGetArticlesPageCountButBothingFound()
+    {
+        $response = $this->mockResponse(file_get_contents('tests/files/empty_articles_list.html'));
+        $client = $this->mockClient($response);
+        $user = $this->mockUser($client);
+
+        $sended = new SendedContent($user);
+        $articles = $sended->getArticlesPage();
+        $this->assertEquals(0, $articles->count());
     }
 }
