@@ -2,25 +2,41 @@
 
 namespace Joe\Content;
 
+use Joe\User;
 
 class Art
 {
+    /** @var User $author */
     private $author;
     private $link;
+
+    /** @var int $id */
     private $id;
     private $thumbnail;
     private $title;
     private $snippetMsg;
+
+    /** @var int $viewsFromSnippet */
     private $viewsFromSnippet;
+
+    /** @var int $viewsOnPage */
     private $viewsOnPage;
     private $addingTimeFromSnippet;
     private $addingDateFromSnippet;
     private $addingTimeOnPage;
+
+    /** @var int $okCountFromSnippet */
     private $okCountFromSnippet;
+
+    /** @var int $okCountOnPage */
     private $okCountOnPage;
+
+    /** @var int $commentsCountFromSnippet */
     private $commentsCountFromSnippet;
     private $artContent;
     private $fullDescription;
+
+    /** @var int $notOkCount */
     private $notOkCount;
     private $tags;
 
@@ -30,7 +46,7 @@ class Art
     }
 
     /**
-     * @return mixed
+     * @return User
      */
     public function getAuthor()
     {
@@ -38,10 +54,10 @@ class Art
     }
 
     /**
-     * @param mixed $author
+     * @param mixed User $author
      * @return Art
      */
-    public function setAuthor($author)
+    public function setAuthor(User $author)
     {
         $this->author = $author;
         return $this;
@@ -71,16 +87,6 @@ class Art
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     * @return Art
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
     }
 
     /**
@@ -138,7 +144,7 @@ class Art
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getViewsFromSnippet()
     {
@@ -146,7 +152,7 @@ class Art
     }
 
     /**
-     * @param mixed $viewsFromSnippet
+     * @param int $viewsFromSnippet
      * @return Art
      */
     public function setViewsFromSnippet($viewsFromSnippet)
@@ -156,7 +162,7 @@ class Art
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getViewsOnPage()
     {
@@ -164,7 +170,7 @@ class Art
     }
 
     /**
-     * @param mixed $viewsOnPage
+     * @param int $viewsOnPage
      * @return Art
      */
     public function setViewsOnPage($viewsOnPage)
@@ -210,7 +216,7 @@ class Art
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getOkCountFromSnippet()
     {
@@ -218,7 +224,7 @@ class Art
     }
 
     /**
-     * @param mixed $okCountFromSnippet
+     * @param int $okCountFromSnippet
      * @return Art
      */
     public function setOkCountFromSnippet($okCountFromSnippet)
@@ -228,7 +234,7 @@ class Art
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getOkCountOnPage()
     {
@@ -236,7 +242,7 @@ class Art
     }
 
     /**
-     * @param mixed $okCountOnPage
+     * @param int $okCountOnPage
      * @return Art
      */
     public function setOkCountOnPage($okCountOnPage)
@@ -282,7 +288,7 @@ class Art
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getNotOkCount()
     {
@@ -290,7 +296,7 @@ class Art
     }
 
     /**
-     * @param mixed $notOkCount
+     * @param int $notOkCount
      * @return Art
      */
     public function setNotOkCount($notOkCount)
@@ -336,7 +342,7 @@ class Art
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getCommentsCountFromSnippet()
     {
@@ -344,7 +350,7 @@ class Art
     }
 
     /**
-     * @param mixed $commentsCountFromSnippet
+     * @param int $commentsCountFromSnippet
      * @return Art
      */
     public function setCommentsCountFromSnippet($commentsCountFromSnippet)
