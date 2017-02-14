@@ -41,6 +41,13 @@ class SendedContent
         );
     }
 
+    public function filmPagesQuantity()
+    {
+        return $this->contentPagesQuantity(
+            Connection::ADDRESS . '/bojownik/' . $this->user->nickName() . '/nadeslane/filmy/1'
+        );
+    }
+
     private function contentPagesQuantity($address)
     {
         $html = $this->getPage($address);
