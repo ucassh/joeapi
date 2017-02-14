@@ -48,6 +48,13 @@ class SendedContent
         );
     }
 
+    public function imagesPagesQuantity()
+    {
+        return $this->contentPagesQuantity(
+            Connection::ADDRESS . '/szaffa/' . $this->user->nickName() . '/najnowsze/strona/1'
+        );
+    }
+
     private function contentPagesQuantity($address)
     {
         $html = $this->getPage($address);
