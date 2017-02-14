@@ -36,9 +36,20 @@ class SendedContent
 
     public function artPagesQuantity()
     {
-        $html = $this->getPage(Connection::ADDRESS . '/bojownik/' . $this->user->nickName() . '/nadeslane/arty/1');
+        return $this->contentPagesQuantity(
+            Connection::ADDRESS . '/bojownik/' . $this->user->nickName() . '/nadeslane/arty/1'
+        );
+    }
+
+    private function contentPagesQuantity($address)
+    {
+        $html = $this->getPage($address);
         $pages = $html->find('.pagerNav');
-        return is_array($pages) ? trim($pages[count($pages) - 1]->text(), '[]') : 0;
+        return ($count = count($pages)) > 0
+            ? ($value = trim($pages[$count - 1]->text(), '[]')) == '&raquo;'
+                ? $pages[$count - 2]->text()
+                : $value
+            : 0;
     }
 
     /**
