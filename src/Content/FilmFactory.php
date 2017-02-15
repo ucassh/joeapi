@@ -2,10 +2,10 @@
 
 namespace Joe\Content;
 
-class ArtFactory extends ContentFactory
+class FilmFactory extends ContentFactory
 {
     public function __construct()
     {
-        $this->clazz = 'Art';
+        $this->clazz = 'Film';
     }
 }
