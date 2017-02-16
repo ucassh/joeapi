@@ -4,6 +4,8 @@ namespace Joe\User;
 
 use Joe\Connection;
 use Joe\Content\ArtFactory;
+use Joe\Content\ContentFactory;
+use Joe\Content\FilmFactory;
 use Joe\User;
 use simplehtmldom_1_5\simple_html_dom_node;
 
@@ -21,13 +23,23 @@ class SendedContent
 
     public function getArticlesPage($page = 1)
     {
-        $html = $this->getPage(Connection::ADDRESS . '/bojownik/' . $this->user->nickName() . '/nadeslane/arty/' . $page);
+        return $this->getContentPage($page, new ArtFactory);
+    }
+
+    public function getFilmsPage($page = 1)
+    {
+        return $this->getContentPage($page, new FilmFactory);
+    }
+
+    protected function getContentPage($page = 1, ContentFactory $factory)
+    {
+        $html = $this->getPage(Connection::ADDRESS . '/bojownik/' . $this->user->nickName() . '/nadeslane/filmy/' . $page);
         $arts = $html->find('.user-item-wrapper');
 
-        $collection = new \ArrayObject();
+        $collection = new \ArrayObject;
         foreach ($arts as $node) {
             $params = $this->extractDataFromListingEntry($node);
-            $art = ArtFactory::createFromListing($params);
+            $art = $factory->createFromListing($params);
             $collection->append($art);
         }
 
