@@ -8,4 +8,16 @@ class ArtFactory extends ContentFactory
     {
         $this->clazz = 'Art';
     }
+
+    public function create(array $params = [])
+    {
+        return $this->createFromListing($params[''])
+            ->getTags($params[''])
+            ->getViewsOnPage($params[''])
+            ->getFullDescription($params[''])
+            ->getAddingTimeOnPage($params[''])
+            ->getOkCountOnPage($params[''])
+            ->getNotOkCount($params['']);
+    }
+
 }
