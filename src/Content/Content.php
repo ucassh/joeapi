@@ -33,6 +33,10 @@ abstract class Content
 
     /** @var int $commentsCountFromSnippet */
     private $commentsCountFromSnippet;
+
+    /** @var int $commentsCountOnPage */
+    private $commentsCountOnPage;
+
     private $fullDescription;
 
     /** @var int $notOkCount */
@@ -190,7 +194,7 @@ abstract class Content
      * @param mixed $addingTimeFromSnippet
      * @return Content
      */
-    public function setAddingTimeFromSnippet($addingTimeFromSnippet)
+    public function setAddingTimeFromSnippet(\DateTime $addingTimeFromSnippet = null)
     {
         $this->addingTimeFromSnippet = $addingTimeFromSnippet;
         return $this;
@@ -316,7 +320,7 @@ abstract class Content
      * @param \DateTime $addingDateFromSnippet
      * @return Content
      */
-    public function setAddingDateFromSnippet(\DateTime $addingDateFromSnippet)
+    public function setAddingDateFromSnippet(\DateTime $addingDateFromSnippet = null)
     {
         $this->addingDateFromSnippet = $addingDateFromSnippet;
         return $this;
@@ -338,5 +342,21 @@ abstract class Content
     {
         $this->commentsCountFromSnippet = $commentsCountFromSnippet;
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCommentsCountOnPage()
+    {
+        return $this->commentsCountOnPage;
+    }
+
+    /**
+     * @param int $commentsCountOnPage
+     */
+    public function setCommentsCountOnPage($commentsCountOnPage)
+    {
+        $this->commentsCountOnPage = $commentsCountOnPage;
     }
 }
