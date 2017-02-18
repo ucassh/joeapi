@@ -12,32 +12,19 @@ abstract class Content
 
     /** @var int $id */
     private $id;
-    private $thumbnail;
     private $title;
-    private $snippetMsg;
 
-    /** @var int $viewsFromSnippet */
-    private $viewsFromSnippet;
+    /** @var int $viewsCount */
+    private $viewsCount;
+    private $addingTime;
 
-    /** @var int $viewsOnPage */
-    private $viewsOnPage;
-    private $addingTimeFromSnippet;
-    private $addingDateFromSnippet;
-    private $addingTimeOnPage;
+    /** @var int $okCount */
+    private $okCount;
 
-    /** @var int $okCountFromSnippet */
-    private $okCountFromSnippet;
+    /** @var int $commentsCount */
+    private $commentsCount;
 
-    /** @var int $okCountOnPage */
-    private $okCountOnPage;
-
-    /** @var int $commentsCountFromSnippet */
-    private $commentsCountFromSnippet;
-
-    /** @var int $commentsCountOnPage */
-    private $commentsCountOnPage;
-
-    private $fullDescription;
+    private $content;
 
     /** @var int $notOkCount */
     private $notOkCount;
@@ -95,24 +82,6 @@ abstract class Content
     /**
      * @return mixed
      */
-    public function getThumbnail()
-    {
-        return $this->thumbnail;
-    }
-
-    /**
-     * @param mixed $thumbnail
-     * @return Content
-     */
-    public function setThumbnail($thumbnail)
-    {
-        $this->thumbnail = $thumbnail;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getTitle()
     {
         return $this->title;
@@ -129,146 +98,70 @@ abstract class Content
     }
 
     /**
-     * @return mixed
-     */
-    public function getSnippetMsg()
-    {
-        return $this->snippetMsg;
-    }
-
-    /**
-     * @param mixed $snippetMsg
-     * @return Content
-     */
-    public function setSnippetMsg($snippetMsg)
-    {
-        $this->snippetMsg = $snippetMsg;
-        return $this;
-    }
-
-    /**
      * @return int
      */
-    public function getViewsFromSnippet()
+    public function getViewsCount()
     {
-        return $this->viewsFromSnippet;
+        return $this->viewsCount;
     }
 
     /**
-     * @param int $viewsFromSnippet
+     * @param int $viewsCount
      * @return Content
      */
-    public function setViewsFromSnippet($viewsFromSnippet)
+    public function setViewsCount($viewsCount)
     {
-        $this->viewsFromSnippet = $viewsFromSnippet;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getViewsOnPage()
-    {
-        return $this->viewsOnPage;
-    }
-
-    /**
-     * @param int $viewsOnPage
-     * @return Content
-     */
-    public function setViewsOnPage($viewsOnPage)
-    {
-        $this->viewsOnPage = $viewsOnPage;
+        $this->viewsCount = $viewsCount;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getAddingTimeFromSnippet()
+    public function getAddingTime()
     {
-        return $this->addingTimeFromSnippet;
+        return $this->addingTime;
     }
 
-    /**
-     * @param string $addingTimeFromSnippet
-     * @return Content
-     */
-    public function setAddingTimeFromSnippet($addingTimeFromSnippet = null)
+    public function setAddingTime(\DateTime $addingTime = null)
     {
-        $this->addingTimeFromSnippet = $addingTimeFromSnippet;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAddingTimeOnPage()
-    {
-        return $this->addingTimeOnPage;
-    }
-
-    /**
-     * @param mixed $addingTimeOnPage
-     * @return Content
-     */
-    public function setAddingTimeOnPage($addingTimeOnPage)
-    {
-        $this->addingTimeOnPage = $addingTimeOnPage;
+        $this->addingTime = $addingTime;
         return $this;
     }
 
     /**
      * @return int
      */
-    public function getOkCountFromSnippet()
+    public function getOkCount()
     {
-        return $this->okCountFromSnippet;
+        return $this->okCount;
     }
 
     /**
-     * @param int $okCountFromSnippet
+     * @param int $okCount
      * @return Content
      */
-    public function setOkCountFromSnippet($okCountFromSnippet)
+    public function setOkCount($okCount)
     {
-        $this->okCountFromSnippet = $okCountFromSnippet;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOkCountOnPage()
-    {
-        return $this->okCountOnPage;
-    }
-
-    /**
-     * @param int $okCountOnPage
-     * @return Content
-     */
-    public function setOkCountOnPage($okCountOnPage)
-    {
-        $this->okCountOnPage = $okCountOnPage;
+        $this->okCount = $okCount;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getFullDescription()
+    public function getContent()
     {
-        return $this->fullDescription;
+        return $this->content;
     }
 
     /**
-     * @param mixed $fullDescription
+     * @param mixed $content
      * @return Content
      */
-    public function setFullDescription($fullDescription)
+    public function setContent($content)
     {
-        $this->fullDescription = $fullDescription;
+        $this->content = $content;
         return $this;
     }
 
@@ -309,54 +202,20 @@ abstract class Content
     }
 
     /**
-     * @return \DateTime
-     */
-    public function getAddingDateFromSnippet()
-    {
-        return $this->addingDateFromSnippet;
-    }
-
-    /**
-     * @param \DateTime $addingDateFromSnippet
-     * @return Content
-     */
-    public function setAddingDateFromSnippet(\DateTime $addingDateFromSnippet = null)
-    {
-        $this->addingDateFromSnippet = $addingDateFromSnippet;
-        return $this;
-    }
-
-    /**
      * @return int
      */
-    public function getCommentsCountFromSnippet()
+    public function getCommentsCount()
     {
-        return $this->commentsCountFromSnippet;
+        return $this->commentsCount;
     }
 
     /**
-     * @param int $commentsCountFromSnippet
+     * @param int $commentsCount
      * @return Content
      */
-    public function setCommentsCountFromSnippet($commentsCountFromSnippet)
+    public function setCommentsCount($commentsCount)
     {
-        $this->commentsCountFromSnippet = $commentsCountFromSnippet;
+        $this->commentsCount = $commentsCount;
         return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCommentsCountOnPage()
-    {
-        return $this->commentsCountOnPage;
-    }
-
-    /**
-     * @param int $commentsCountOnPage
-     */
-    public function setCommentsCountOnPage($commentsCountOnPage)
-    {
-        $this->commentsCountOnPage = $commentsCountOnPage;
     }
 }
