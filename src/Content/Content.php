@@ -191,10 +191,10 @@ abstract class Content
     }
 
     /**
-     * @param mixed $addingTimeFromSnippet
+     * @param string $addingTimeFromSnippet
      * @return Content
      */
-    public function setAddingTimeFromSnippet(\DateTime $addingTimeFromSnippet = null)
+    public function setAddingTimeFromSnippet($addingTimeFromSnippet = null)
     {
         $this->addingTimeFromSnippet = $addingTimeFromSnippet;
         return $this;
