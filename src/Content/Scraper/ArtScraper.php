@@ -4,6 +4,7 @@ namespace Joe\Content\Scraper;
 
 use Joe\Content\ArtFactory;
 use Joe\User;
+use simplehtmldom_1_5\simple_html_dom_node;
 
 class ArtScraper extends ContentScraper
 {
@@ -21,11 +22,12 @@ class ArtScraper extends ContentScraper
         $title = $art->find('.title');
         $authorDate = $art->find('.art-author-date');
         $authorDate = isset($authorDate[0]) ? array_map('trim', explode('&middot;', $authorDate[0]->text())) : ['', ''];
-        $date = explode(' ', $authorDate);
-        $counts = isset($counts[0]) ? array_map('trim', explode('&middot;', $counts[0]->text())) : ['', '', ''];
+        $date = explode(' ', $authorDate[1]);
+        $counts = $html->find('.art-numbers');
+        $counts = isset($counts[0]) ? array_map('trim', explode('&nbsp;', $counts[0]->text())) : ['', '', ''];
         $content = $html->find('div#arcik');
         $notOkCount = $html->find('div#objectNotOkID');
-        $tags = array_map(function($val){
+        $tags = array_map(function(simple_html_dom_node $val){
             return $val->text();
         }, $html->find('.tag'));
 
@@ -35,23 +37,20 @@ class ArtScraper extends ContentScraper
             'title' => isset($title[0]) ? trim($title[0]->text()) : '',
             'link' => $address,
             'id' => $id,
-            'main_views_count' => (int) $counts[0],
-            'main_ok_count' => (int)$counts[1],
-            'comments_count_on_page' => (int)$counts[2],
-
-
+            'views_count' => (int) str_replace(' ', '', $counts[0]),
+            'ok_count' => (int)$counts[1],
+            'comments_count' => (int)$counts[2],
             'tags' => $tags,
-            'full_description' => isset($content[0]) ? $content[0]->innertext() : '',
-            'main_adding_time' =>
+            'content' => isset($content[0]) ? $content[0]->innertext() : '',
+            'time' =>
                 isset($date[0])
                 ? new \DateTime(
-                    $date[2] . '-' . $this->monthNameToNumber($date[1]) . '-' . $date[0] . $date[3] . ':' . $date[4]
+                    $date[2] . '-' . $this->monthNameToNumber($date[1]) . '-' . $date[0] . ' ' . $date[3]
                 )
                 : null
             ,
-            'main_not_ok_count' => isset($notOkCount[0]) ? (int)$notOkCount[0]->text() : 0
+            'not_ok_count' => isset($notOkCount[0]) ? (int)$notOkCount[0]->text() : 0
         ]);
-
     }
 
     private function monthNameToNumber($monthName)
