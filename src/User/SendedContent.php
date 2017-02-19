@@ -3,9 +3,9 @@
 namespace Joe\User;
 
 use Joe\Connection;
-use Joe\Content\ArtFactory;
 use Joe\Content\ContentFactory;
-use Joe\Content\FilmFactory;
+use Joe\Content\Scraper\ArtScraper;
+use Joe\Content\SnippetFactory;
 use Joe\User;
 use simplehtmldom_1_5\simple_html_dom_node;
 
@@ -23,12 +23,12 @@ class SendedContent
 
     public function getArticlesPage($page = 1)
     {
-        return $this->getContentPage($page, new ArtFactory);
+        return $this->getContentPage($page, new SnippetFactory('ArtSnippet'));
     }
 
     public function getFilmsPage($page = 1)
     {
-        return $this->getContentPage($page, new FilmFactory);
+        return $this->getContentPage($page, new SnippetFactory('FilmSnippet'));
     }
 
     protected function getContentPage($page = 1, ContentFactory $factory)
@@ -39,7 +39,7 @@ class SendedContent
         $collection = new \ArrayObject;
         foreach ($arts as $node) {
             $params = $this->extractDataFromListingEntry($node);
-            $art = $factory->createFromListing($params);
+            $art = $factory->create($params);
             $collection->append($art);
         }
 
@@ -97,10 +97,9 @@ class SendedContent
             'title' => isset($link[0]) ? trim($link[0]->text()) : '',
             'link' => isset($link[0]) ? $link[0]->href : '',
             'id' => (int)substr($beginOfIf, 0, strpos($beginOfIf, '/')),
-            'snippet_msg' => isset($description[0]) ? trim($description[0]->text()) : '',
+            'content' => isset($description[0]) ? trim($description[0]->text()) : '',
             'thumbnail' => isset($img[0]) ? $img[0]->src : '',
-            'time' => isset($addTime[1]) ? trim($addTime[1]->text()) : '',
-            'date' => new \DateTime(isset($addTime[1]) ? $addTime[1]->getAttribute('title') : null),
+            'time' => new \DateTime(isset($addTime[1]) ? $addTime[1]->getAttribute('title') : null),
             'ok_count' => (int)$counts[0],
             'views_count' => (int)str_replace([' ','x'], '', $counts[1]),
             'comments_count' => (int)$counts[2]
