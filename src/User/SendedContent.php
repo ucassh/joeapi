@@ -67,6 +67,12 @@ class SendedContent
         );
     }
 
+    public function getArt($id)
+    {
+        $artScraper = new ArtScraper($id, $this->client);
+        return $artScraper->getSite();
+    }
+
     private function contentPagesQuantity($address)
     {
         $html = $this->getPage($address);
