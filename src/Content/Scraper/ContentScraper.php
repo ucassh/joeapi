@@ -4,6 +4,7 @@ namespace Joe\Content\Scraper;
 
 use Joe\Http\Client;
 use Joe\User\ClientTrait;
+use simplehtmldom_1_5\simple_html_dom;
 
 abstract class ContentScraper
 {
@@ -12,15 +13,34 @@ abstract class ContentScraper
     const ADDRESS = 'http://joemonster.org';
     protected $id;
 
+    /** @var simple_html_dom $html */
+    protected $html;
+
     public function __construct($id, Client $client) {
         $this->id = $id;
         $this->client = $client;
+
+        $this->prepare();
     }
 
+    protected function prepare()
+    {
+        $html = $this->getPage($this->getAddress());
+
+        $art = $this->contentHtml($html);
+
+        if (empty($art)) {
+            throw new \Exception('Content not found');
+        }
+
+        $this->html = $art;
+    }
+
+    protected abstract function contentHtml(simple_html_dom $fullHtml = null);
     public abstract function getSite();
+
     public abstract function getAuthor();
-    public abstract function getLink();
-    public abstract function getId();
+    public abstract function getAddress();
     public abstract function getTitle();
     public abstract function getViewsCount();
     public abstract function getAddingTime();
@@ -31,4 +51,10 @@ abstract class ContentScraper
     public abstract function getTags();
     public abstract function getComments();
     public abstract function getLikers();
+    public abstract function getAgeRestrictions();
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }
