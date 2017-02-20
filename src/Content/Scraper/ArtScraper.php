@@ -3,85 +3,142 @@
 namespace Joe\Content\Scraper;
 
 use Joe\Content\ArtFactory;
+use Joe\Helper\TimeHelper;
 use Joe\User;
+use simplehtmldom_1_5\simple_html_dom;
 use simplehtmldom_1_5\simple_html_dom_node;
 
 class ArtScraper extends ContentScraper
 {
-    public function getSite($id)
+    private $okCount;
+    private $viewsCount;
+    private $commentsCount;
+    private $time;
+    private $author;
+
+    public function getSite()
     {
-        $address = $this::ADDRESS . '/art/' . $id;
-        $html = $this->getPage($address);
-
-        $art = $html->find('#main_article');
-        if (isset($art[0])) {
-            $art = $art[0];
-        } else {
-            throw new \Exception('Article path not found');
-        }
-        $title = $art->find('.title');
-        $authorDate = $art->find('.art-author-date');
-        $authorDate = isset($authorDate[0]) ? array_map('trim', explode('&middot;', $authorDate[0]->text())) : ['', ''];
-        $date = explode(' ', $authorDate[1]);
-        $counts = $html->find('.art-numbers');
-        $counts = isset($counts[0]) ? array_map('trim', explode('&nbsp;', $counts[0]->text())) : ['', '', ''];
-        $content = $html->find('div#arcik');
-        $notOkCount = $html->find('div#objectNotOkID');
-        $tags = array_map(function(simple_html_dom_node $val){
-            return $val->text();
-        }, $html->find('.tag'));
-
         $artFactory = new ArtFactory;
         return $artFactory->create([
-            'author' => new User($authorDate[0]),
-            'title' => isset($title[0]) ? trim($title[0]->text()) : '',
-            'link' => $address,
-            'id' => $id,
-            'views_count' => (int) str_replace(' ', '', $counts[0]),
-            'ok_count' => (int)$counts[1],
-            'comments_count' => (int)$counts[2],
-            'tags' => $tags,
-            'content' => isset($content[0]) ? $content[0]->innertext() : '',
-            'time' =>
-                isset($date[0])
-                ? new \DateTime(
-                    $date[2] . '-' . $this->monthNameToNumber($date[1]) . '-' . $date[0] . ' ' . $date[3]
-                )
-                : null
-            ,
-            'not_ok_count' => isset($notOkCount[0]) ? (int)$notOkCount[0]->text() : 0
+            'author' => $this->getAuthor(),
+            'title' => $this->getTitle(),
+            'link' => $this->getAddress(),
+            'id' => $this->id,
+            'views_count' => $this->getViewsCount(),
+            'ok_count' => $this->getOkCount(),
+            'comments_count' => $this->getCommentsCount(),
+            'tags' => $this->getTags(),
+            'content' => $this->getContent(),
+            'time' => $this->getAddingTime(),
+            'not_ok_count' => $this->getNotOkCount()
         ]);
     }
 
-    private function monthNameToNumber($monthName)
+    public function getAuthor()
     {
-        switch ($monthName) {
-            case 'stycznia':
-                return '01';
-            case 'lutego':
-                return '02';
-            case 'marca':
-                return '03';
-            case 'kwietnia':
-                return '04';
-            case 'maja':
-                return '05';
-            case 'czerwca':
-                return '06';
-            case 'lipca':
-                return '07';
-            case 'sierpnia':
-                return '08';
-            case 'września':
-                return '09';
-            case 'października':
-                return '10';
-            case 'listopada':
-                return '11';
-            case 'grudnia':
-                return '12';
-            default:
-                return '01';
+        $this->prepareAuthorAndTimeIfNotSet();
+        return new User($this->author);
+    }
+
+    public function getTitle()
+    {
+        $title = $this->html->find('.title');
+        return isset($title[0]) ? trim($title[0]->text()) : '';
+    }
+
+    public function getViewsCount()
+    {
+        $this->prepareCountsIfNotSet();
+        return $this->viewsCount;
+    }
+
+    public function getAddingTime()
+    {
+        $this->prepareAuthorAndTimeIfNotSet();
+        return $this->time;
+    }
+
+    public function getOkCount()
+    {
+        $this->prepareCountsIfNotSet();
+        return $this->okCount;
+    }
+
+    public function getCommentsCount()
+    {
+        $this->prepareCountsIfNotSet();
+        return $this->commentsCount;
+    }
+
+    public function getContent()
+    {
+        $content = $this->html->find('div#arcik');
+        return isset($content[0]) ? $content[0]->innertext() : '';
+
+    }
+
+    public function getNotOkCount()
+    {
+        $notOkCount = $this->html->find('div#objectNotOkID');
+        return isset($notOkCount[0]) ? (int)$notOkCount[0]->text() : 0;
+
+    }
+
+    public function getTags()
+    {
+        return array_map(function (simple_html_dom_node $val) {
+            return $val->text();
+        }, $this->html->find('.tag'));
+    }
+
+    public function getComments()
+    {
+        // TODO: Implement getComments() method.
+    }
+
+    public function getLikers()
+    {
+        // TODO: Implement getLikers() method.
+    }
+
+    public function getAgeRestrictions()
+    {
+        // TODO: Implement getAgeRestrictions() method.
+    }
+
+    public function getAddress()
+    {
+        return $this::ADDRESS . '/art/' . $this->id;
+    }
+
+    protected function contentHtml(simple_html_dom $fullHtml = null)
+    {
+        $art = $fullHtml->find('#main_article');
+
+        return isset($art[0]) ? $art[0] : null;
+    }
+
+    private function prepareCountsIfNotSet()
+    {
+        if (empty($this->okCount)) {
+            $counts = $this->html->find('.art-numbers');
+            $counts = isset($counts[0]) ? array_map('trim', explode('&nbsp;', $counts[0]->text())) : ['', '', ''];
+
+            $this->okCount = (int)$counts[1];
+            $this->viewsCount = (int)str_replace(' ', '', $counts[0]);
+            $this->commentsCount = (int)$counts[12];
         }
+    }
+
+    private function prepareAuthorAndTimeIfNotSet()
+    {
+        $authorDate = $this->html->find('.art-author-date');
+        $authorDate = isset($authorDate[0]) ? array_map('trim', explode('&middot;', $authorDate[0]->text())) : ['', ''];
+        $this->author = $authorDate[0];
+
+        $date = explode(' ', $authorDate[1]);
+        $this->time = isset($date[0])
+            ? new \DateTime($date[2] . '-' . TimeHelper::monthNameToNumber($date[1]) . '-' . $date[0] . ' ' . $date[3])
+            : null;
     }
 }
