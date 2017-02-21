@@ -30,6 +30,10 @@ abstract class Content
     private $notOkCount;
     private $tags;
 
+    private $likers;
+    private $comments;
+    private $ageRestrictions;
+
     public function __construct($id)
     {
         $this->id = $id;
@@ -218,4 +222,53 @@ abstract class Content
         $this->commentsCount = $commentsCount;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getLikers()
+    {
+        return $this->likers;
+    }
+
+    /**
+     * @param mixed $likers
+     */
+    public function setLikers($likers)
+    {
+        $this->likers = $likers;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAgeRestrictions()
+    {
+        return $this->ageRestrictions;
+    }
+
+    /**
+     * @param mixed $ageRestrictions
+     */
+    public function setAgeRestrictions($ageRestrictions)
+    {
+        $this->ageRestrictions = $ageRestrictions;
+    }
+
 }
