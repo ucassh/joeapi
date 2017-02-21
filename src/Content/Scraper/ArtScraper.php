@@ -129,7 +129,7 @@ class ArtScraper extends ContentScraper
 
             $this->okCount = (int)$counts[1];
             $this->viewsCount = (int)str_replace(' ', '', $counts[0]);
-            $this->commentsCount = (int)$counts[12];
+            $this->commentsCount = (int)$counts[2];
         }
     }
 
