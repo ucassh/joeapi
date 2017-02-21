@@ -98,12 +98,15 @@ class ArtScraper extends ContentScraper
 
     public function getLikers()
     {
-        // TODO: Implement getLikers() method.
+        $collection = new \ArrayObject;
+        foreach ($this->html->find('#userContainer>div.userBox') as $div) {
+            $collection->append(new User(trim($div->text())));
+        }
+        return $collection;
     }
 
     public function getAgeRestrictions()
     {
-        // TODO: Implement getAgeRestrictions() method.
     }
 
     public function getAddress()
