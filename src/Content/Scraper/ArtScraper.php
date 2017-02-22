@@ -19,19 +19,7 @@ class ArtScraper extends ContentScraper
     public function getSite()
     {
         $artFactory = new ArtFactory;
-        return $artFactory->create([
-            'author' => $this->getAuthor(),
-            'title' => $this->getTitle(),
-            'link' => $this->getAddress(),
-            'id' => $this->id,
-            'views_count' => $this->getViewsCount(),
-            'ok_count' => $this->getOkCount(),
-            'comments_count' => $this->getCommentsCount(),
-            'tags' => $this->getTags(),
-            'content' => $this->getContent(),
-            'time' => $this->getAddingTime(),
-            'not_ok_count' => $this->getNotOkCount()
-        ]);
+        return $artFactory->createFromScraper($this);
     }
 
     public function getAuthor()
@@ -99,7 +87,8 @@ class ArtScraper extends ContentScraper
     public function getLikers()
     {
         $collection = new \ArrayObject;
-        foreach ($this->html->find('#userContainer>div.userBox') as $div) {
+        $html = $this->getPage(self::ADDRESS . '/who.php?sid=' . $this->getId() . '&op=favourited-articles');
+        foreach ($html->find('div.userBox') as $div) {
             $collection->append(new User(trim($div->text())));
         }
         return $collection;
