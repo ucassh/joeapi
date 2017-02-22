@@ -2,6 +2,8 @@
 
 namespace Joe\Content;
 
+use Joe\Content\Scraper\ContentScraper;
+
 abstract class ContentFactory
 {
     protected $clazz;
@@ -22,6 +24,29 @@ abstract class ContentFactory
             ->setTitle(isset($params['title']) ? $params['title'] : null)
             ->setOkCount(isset($params['ok_count']) ? $params['ok_count'] : null)
             ->setNotOkCount(isset($params['not_ok_count']) ? $params['not_ok_count'] : null)
-            ->setViewsCount(isset($params['views_count']) ? $params['views_count'] : null);
+            ->setViewsCount(isset($params['views_count']) ? $params['views_count'] : null)
+            ->setAgeRestrictions(isset($params['comments']) ? $params['comments'] : null)
+            ->setComments(isset($params['age_restrictions']) ? $params['age_restrictions'] : null)
+            ->setLikers(isset($params['likers']) ? $params['likers'] : null);
+    }
+
+    public function createFromScraper(ContentScraper $scraper)
+    {
+        return $this->create([
+            'author' => $scraper->getAuthor(),
+            'title' => $scraper->getTitle(),
+            'link' => $scraper->getAddress(),
+            'id' => $scraper->getId(),
+            'views_count' => $scraper->getViewsCount(),
+            'ok_count' => $scraper->getOkCount(),
+            'comments_count' => $scraper->getCommentsCount(),
+            'tags' => $scraper->getTags(),
+            'content' => $scraper->getContent(),
+            'time' => $scraper->getAddingTime(),
+            'not_ok_count' => $scraper->getNotOkCount(),
+            'comments' => $scraper->getComments(),
+            'likers' => $scraper->getLikers(),
+            'age_restrictions' => $scraper->getAgeRestrictions()
+        ]);
     }
 }
