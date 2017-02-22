@@ -30,6 +30,7 @@ abstract class Content
     private $notOkCount;
     private $tags;
 
+    /** @var \ArrayObject $likers  */
     private $likers;
     private $comments;
     private $ageRestrictions;
@@ -224,7 +225,7 @@ abstract class Content
     }
 
     /**
-     * @return mixed
+     * @return \ArrayObject
      */
     public function getLikers()
     {
@@ -232,11 +233,13 @@ abstract class Content
     }
 
     /**
-     * @param mixed $likers
+     * @param \ArrayObject $likers
+     * @return $this
      */
-    public function setLikers($likers)
+    public function setLikers(\ArrayObject $likers)
     {
         $this->likers = $likers;
+        return $this;
     }
 
     /**
@@ -253,6 +256,7 @@ abstract class Content
     public function setComments($comments)
     {
         $this->comments = $comments;
+        return $this;
     }
 
     /**
@@ -269,6 +273,7 @@ abstract class Content
     public function setAgeRestrictions($ageRestrictions)
     {
         $this->ageRestrictions = $ageRestrictions;
+        return $this;
     }
 
 }
