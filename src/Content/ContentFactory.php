@@ -25,8 +25,8 @@ abstract class ContentFactory
             ->setOkCount(isset($params['ok_count']) ? $params['ok_count'] : null)
             ->setNotOkCount(isset($params['not_ok_count']) ? $params['not_ok_count'] : null)
             ->setViewsCount(isset($params['views_count']) ? $params['views_count'] : null)
-            ->setAgeRestrictions(isset($params['comments']) ? $params['comments'] : null)
-            ->setComments(isset($params['age_restrictions']) ? $params['age_restrictions'] : null)
+            ->setAgeRestrictions(isset($params['age_restrictions']) ? $params['age_restrictions'] : null)
+            ->setComments(isset($params['comments']) ? $params['comments'] : null)
             ->setLikers(isset($params['likers']) ? $params['likers'] : null);
     }
 
