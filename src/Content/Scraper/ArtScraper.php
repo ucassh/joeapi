@@ -96,6 +96,7 @@ class ArtScraper extends ContentScraper
 
     public function getAgeRestrictions()
     {
+        return $this->html->find('.sprite-for_adults') > 0;
     }
 
     public function getAddress()
