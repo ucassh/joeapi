@@ -3,6 +3,7 @@
 namespace Joe\Content\Scraper;
 
 use Joe\Content\ArtFactory;
+use Joe\Helper\CommentsHelper;
 use Joe\Helper\TimeHelper;
 use Joe\User;
 use simplehtmldom_1_5\simple_html_dom;
@@ -81,7 +82,11 @@ class ArtScraper extends ContentScraper
 
     public function getComments()
     {
-        // TODO: Implement getComments() method.
+        $scripts = implode(PHP_EOL, array_map(function ($val) {
+            return str_replace("\t", PHP_EOL, $val->innertext());
+        }, $this->html->find('script')));
+
+        return CommentsHelper::extractComments($scripts);
     }
 
     public function getLikers()
