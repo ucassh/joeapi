@@ -13,7 +13,7 @@ abstract class ContentScraper
     const ADDRESS = 'http://joemonster.org';
     protected $id;
 
-    /** @var simple_html_dom $html */
+    /** @var simple_html_dom_node $html */
     protected $html;
 
     public function __construct($id, Client $client) {

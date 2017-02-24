@@ -32,6 +32,7 @@ abstract class Content
 
     /** @var \ArrayObject $likers  */
     private $likers;
+    /** @var  \ArrayObject $comments */
     private $comments;
     private $ageRestrictions;
 
@@ -128,6 +129,10 @@ abstract class Content
         return $this->addingTime;
     }
 
+    /**
+     * @param \DateTime|null $addingTime
+     * @return $this
+     */
     public function setAddingTime(\DateTime $addingTime = null)
     {
         $this->addingTime = $addingTime;
@@ -243,7 +248,7 @@ abstract class Content
     }
 
     /**
-     * @return mixed
+     * @return \ArrayObject
      */
     public function getComments()
     {
@@ -251,9 +256,10 @@ abstract class Content
     }
 
     /**
-     * @param mixed $comments
+     * @param $comments
+     * @return $this
      */
-    public function setComments($comments)
+    public function setComments(\ArrayObject $comments = null)
     {
         $this->comments = $comments;
         return $this;
