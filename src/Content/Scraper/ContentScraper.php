@@ -37,6 +37,17 @@ abstract class ContentScraper
         $this->html = $art;
     }
 
+
+    /**
+     * @param $selector
+     * @param $index
+     * @return simple_html_dom_node|string
+     */
+    protected function getElemTxtIfSet($selector, $index = 0){
+        $nodes = $this->html->find($selector);
+        return isset($nodes[$index]) ? trim($nodes[$index]->text()) : '';
+    }
+
     protected abstract function contentHtml(simple_html_dom $fullHtml = null);
     public abstract function getSite();
 
