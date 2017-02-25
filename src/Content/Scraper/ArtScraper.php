@@ -82,7 +82,7 @@ class ArtScraper extends ContentScraper
 
     public function getComments()
     {
-        $scripts = implode(PHP_EOL, array_map(function ($val) {
+        $scripts = implode(PHP_EOL, array_map(function (simple_html_dom_node $val) {
             return str_replace("\t", PHP_EOL, $val->innertext());
         }, $this->html->find('script')));
 
@@ -107,6 +107,12 @@ class ArtScraper extends ContentScraper
     public function getAddress()
     {
         return $this::ADDRESS . '/art/' . $this->id;
+    }
+
+    public function getDescription()
+    {
+        $content = $this->html->find('div#arcik strong');
+        return isset($content[0]) ? $content[0]->text() : '';
     }
 
     protected function contentHtml(simple_html_dom $fullHtml = null)

@@ -27,7 +27,8 @@ abstract class ContentFactory
             ->setViewsCount(isset($params['views_count']) ? $params['views_count'] : null)
             ->setAgeRestrictions(isset($params['age_restrictions']) ? $params['age_restrictions'] : null)
             ->setComments(isset($params['comments']) ? $params['comments'] : null)
-            ->setLikers(isset($params['likers']) ? $params['likers'] : null);
+            ->setLikers(isset($params['likers']) ? $params['likers'] : null)
+            ->setDescription(isset($params['description']) ? $params['description'] : null);
     }
 
     public function createFromScraper(ContentScraper $scraper)
@@ -46,7 +47,8 @@ abstract class ContentFactory
             'not_ok_count' => $scraper->getNotOkCount(),
             'comments' => $scraper->getComments(),
             'likers' => $scraper->getLikers(),
-            'age_restrictions' => $scraper->getAgeRestrictions()
+            'age_restrictions' => $scraper->getAgeRestrictions(),
+            'description' => $scraper->getDescription(),
         ]);
     }
 }

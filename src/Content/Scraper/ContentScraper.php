@@ -5,6 +5,7 @@ namespace Joe\Content\Scraper;
 use Joe\Http\Client;
 use Joe\User\ClientTrait;
 use simplehtmldom_1_5\simple_html_dom;
+use simplehtmldom_1_5\simple_html_dom_node;
 
 abstract class ContentScraper
 {
@@ -52,6 +53,7 @@ abstract class ContentScraper
     public abstract function getComments();
     public abstract function getLikers();
     public abstract function getAgeRestrictions();
+    public abstract function getDescription();
 
     public function getId()
     {

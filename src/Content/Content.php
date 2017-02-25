@@ -32,9 +32,13 @@ abstract class Content
 
     /** @var \ArrayObject $likers  */
     private $likers;
+
     /** @var  \ArrayObject $comments */
     private $comments;
+
+    /** @var boolean $ageRestrictions */
     private $ageRestrictions;
+    private $description;
 
     public function __construct($id)
     {
@@ -274,11 +278,30 @@ abstract class Content
     }
 
     /**
-     * @param mixed $ageRestrictions
+     * @param boolean $ageRestrictions
+     * @return $this
      */
     public function setAgeRestrictions($ageRestrictions)
     {
         $this->ageRestrictions = $ageRestrictions;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     * @return Content
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
         return $this;
     }
 
