@@ -28,6 +28,7 @@ abstract class ContentFactory
             ->setAgeRestrictions(isset($params['age_restrictions']) ? $params['age_restrictions'] : null)
             ->setComments(isset($params['comments']) ? $params['comments'] : null)
             ->setLikers(isset($params['likers']) ? $params['likers'] : null)
+            ->setTags(isset($params['tags']) ? $params['tags'] : null)
             ->setDescription(isset($params['description']) ? $params['description'] : null);
     }
 
