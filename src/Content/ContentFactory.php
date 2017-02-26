@@ -32,6 +32,10 @@ abstract class ContentFactory
             ->setDescription(isset($params['description']) ? $params['description'] : null);
     }
 
+    /**
+     * @param ContentScraper $scraper
+     * @return Content
+     */
     public function createFromScraper(ContentScraper $scraper)
     {
         return $this->create([
