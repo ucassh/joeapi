@@ -44,8 +44,18 @@ abstract class ContentScraper
      * @return simple_html_dom_node|string
      */
     protected function getElemTxtIfSet($selector, $index = 0){
+        $node = $this->getElemIfSet($selector, $index);
+        return isset($node) ? trim($node->text()) : '';
+    }
+
+    /**
+     * @param $selector
+     * @param int $index
+     * @return null|simple_html_dom_node
+     */
+    protected function getElemIfSet($selector, $index = 0){
         $nodes = $this->html->find($selector);
-        return isset($nodes[$index]) ? trim($nodes[$index]->text()) : '';
+        return isset($nodes[$index]) ? $nodes[$index] : null;
     }
 
     protected abstract function contentHtml(simple_html_dom $fullHtml = null);
