@@ -40,32 +40,35 @@ class FilmScraper extends ContentScraper
 
     public function getViewsCount()
     {
-        // TODO: Implement getViewsCount() method.
+        //yep, there is no place with that value
+        return 0;
     }
 
     public function getAddingTime()
     {
-        // TODO: Implement getAddingTime() method.
+        $node = $this->getElemIfSet('.mtv-video-details span', 1);
+        return new \DateTime($node->title);
     }
 
     public function getOkCount()
     {
-        // TODO: Implement getOkCount() method.
+        return (int)$this->getElemTxtIfSet('div#glosow');
     }
 
     public function getCommentsCount()
     {
-        // TODO: Implement getCommentsCount() method.
+        $numbers = explode('&nbsp;', $this->getElemTxtIfSet('.art-numbers'));
+        return isset($numbers[1]) ? (int)trim($numbers[1]) : 0;
     }
 
     public function getContent()
     {
-        // TODO: Implement getContent() method.
+        return $this->getElemIfSet('.playerBox iframe');
     }
 
     public function getNotOkCount()
     {
-        // TODO: Implement getNotOkCount() method.
+        return (int)$this->getElemTxtIfSet('#objectNotOkID a');
     }
 
     public function getTags()
@@ -96,12 +99,18 @@ class FilmScraper extends ContentScraper
 
     public function getAgeRestrictions()
     {
-        // TODO: Implement getAgeRestrictions() method.
+        //another yep... if you're and adult (by settings), you don't have any info of content age restrictions
+        return false;
     }
 
     public function getDescription()
     {
         $title = $this->html->find('mtvDescription');
         return isset($title[0]) ? trim($title[0]->text()) : '';
+    }
+
+    public function getCategory()
+    {
+        return $this->getElemTxtIfSet('.mtv-video-details a', 3);
     }
 }
