@@ -34,7 +34,7 @@ class UserTest extends TestsAbstract
         $response = $this->mockResponse(file_get_contents('tests/files/comments-payed-account.html'));
         $client = $this->mockClient($response);
 
-        $user = new User('taksobietestuje');
+        $user = new User('nasty_cutlet');
         $user->setClient($client);
         $comments = $user->comments();
 
@@ -49,7 +49,7 @@ class UserTest extends TestsAbstract
         $this->assertSame(11, $comment[0]->getNotOkCount(), "NotOkCount read incorrect");
         $this->assertSame(81823304797, $comment[0]->getContentId(), "ContenId read incorrect");
         $this->assertSame(81823304797, $comment[0]->getParentId(), "ParentId read incorrect");
-        $this->assertSame($user, $comment[0]->getUser(), "User read incorrect");
+        $this->assertSame($user->nickName(), $comment[0]->getUser()->nickName(), "User read incorrect");
         $this->assertSame(5432, $comment[0]->getElementId(), "ElementIt read incorrect");
         $this->assertSame(1478468630, $comment[0]->getUnixTimestamp(), "UnieTimestamp read incorrect");
         $this->assertSame("vid", $comment[0]->getType(), "Type read incorrect");
@@ -62,7 +62,7 @@ class UserTest extends TestsAbstract
         $this->assertSame(7, $comment[1]->getNotOkCount(), "NotOkCount read incorrect");
         $this->assertSame(2222, $comment[1]->getContentId(), "ContenId read incorrect");
         $this->assertSame(2222, $comment[1]->getParentId(), "ParentId read incorrect");
-        $this->assertSame($user, $comment[1]->getUser(), "User read incorrect");
+        $this->assertSame($user->nickName(), $comment[1]->getUser()->nickName(), "User read incorrect");
         $this->assertSame(4444, $comment[1]->getElementId(), "ElementIt read incorrect");
         $this->assertSame(1478438627, $comment[1]->getUnixTimestamp(), "UnieTimestamp read incorrect");
         $this->assertSame("art", $comment[1]->getType(), "Type read incorrect");
