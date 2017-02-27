@@ -5,6 +5,7 @@ namespace Joe\User;
 use Joe\Connection;
 use Joe\Content\ContentFactory;
 use Joe\Content\Scraper\ArtScraper;
+use Joe\Content\Scraper\FilmScraper;
 use Joe\Content\SnippetFactory;
 use Joe\User;
 use simplehtmldom_1_5\simple_html_dom_node;
@@ -70,6 +71,12 @@ class SendedContent
     public function getArt($id)
     {
         $artScraper = new ArtScraper($id, $this->client);
+        return $artScraper->getSite();
+    }
+
+    public function getFilm($id)
+    {
+        $artScraper = new FilmScraper($id, $this->client);
         return $artScraper->getSite();
     }
 
