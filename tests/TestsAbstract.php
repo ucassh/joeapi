@@ -37,11 +37,15 @@ abstract class TestsAbstract extends \PHPUnit_Framework_TestCase
      */
     protected function mockClient($response)
     {
+        $response = is_array($response) ? $response : [$response];
         $client = $this->createMock(Client::class);
-        $client
-            ->expects($this->any())
-            ->method('request')
-            ->willReturn($response);
+        $size = count($response);
+        for ($i = 0; $i <= $size - 1; $i++) {
+            $client
+                ->expects( count($response) == 1 ? $this->any() : $this->at($i))
+                ->method('request')
+                ->willReturn($response[$i]);
+        }
         return $client;
     }
 

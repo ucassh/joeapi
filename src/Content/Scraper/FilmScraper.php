@@ -105,7 +105,7 @@ class FilmScraper extends ContentScraper
 
     public function getDescription()
     {
-        $title = $this->html->find('mtvDescription');
+        $title = $this->html->find('#mtvDescription');
         return isset($title[0]) ? trim($title[0]->text()) : '';
     }
 
