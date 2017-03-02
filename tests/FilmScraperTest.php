@@ -29,6 +29,7 @@ class FilmScraperTest extends TestsAbstract
         //$this->assertEquals(304, $scraper->getLikers()->count()); - tested in another test
         $this->assertEquals(false, $scraper->getAgeRestrictions());
         $this->assertEquals('Francuska kelnerka wykazała się niemałą odwagą, kiedy nieproszony "pies" pojawił się w knajpie. Miejsce akcji - Australia oczywiście.', $scraper->getDescription());
+        $this->assertEquals('Amatorskie', $scraper->getCategory());
     }
 
     public function testLikersTest()
@@ -40,6 +41,18 @@ class FilmScraperTest extends TestsAbstract
 
         $scraper = new FilmScraper($id, $client);
         $this->assertEquals(306, $scraper->getLikers()->count());
+    }
+
+    /**
+     * @expectedException        \Exception
+     * @expectedExceptionMessage No document found
+     */
+    public function testNoResponse()
+    {
+        $response = $this->mockResponse('');
+        $client = $this->mockClient($response);
+
+        new FilmScraper(81989, $client);
     }
 
 
