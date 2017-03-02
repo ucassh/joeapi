@@ -101,7 +101,7 @@ class ArtScraper extends ContentScraper
 
     public function getAgeRestrictions()
     {
-        return $this->html->find('.sprite-for_adults') > 0;
+        return count($this->html->find('.sprite-for_adults')) > 0;
     }
 
     public function getAddress()
@@ -112,7 +112,7 @@ class ArtScraper extends ContentScraper
     public function getDescription()
     {
         $content = $this->html->find('div#arcik strong');
-        return isset($content[0]) ? $content[0]->text() : '';
+        return isset($content[0]) ? trim($content[0]->text()) : '';
     }
 
     protected function contentHtml(simple_html_dom $fullHtml = null)

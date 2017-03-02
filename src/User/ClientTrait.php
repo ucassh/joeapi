@@ -40,7 +40,7 @@ trait ClientTrait
         $body = $res->getBody();
         $dom = HtmlDomParser::str_get_html($body);
 
-        if ($dom !== false) {
+        if ($dom === false) {
             throw new \Exception('No document found');
         }
 
