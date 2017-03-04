@@ -41,4 +41,16 @@ class ArtScraperTest extends TestsAbstract
         $scraper = new ArtScraper(38793, $client);
         $this::assertEquals(266, $scraper->getLikers()->count());
     }
+
+    /**
+     * @expectedException        \Exception
+     * @expectedExceptionMessage No document found
+     */
+    public function testNoResponse()
+    {
+        $response = $this->mockResponse('');
+        $client = $this->mockClient($response);
+
+        new ArtScraper(38793, $client);
+    }
 }
