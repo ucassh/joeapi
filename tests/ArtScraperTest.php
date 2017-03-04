@@ -12,13 +12,13 @@ class ArtScraperTest extends TestsAbstract
     {
         $response = $this->mockResponse(file_get_contents('tests/files/art.html'));
         $client = $this->mockClient($response);
-        $id = 38793;
+        $artId = 38793;
 
-        $scraper = new ArtScraper($id, $client);
+        $scraper = new ArtScraper($artId, $client);
         $this::assertEquals('Brzeziu', $scraper->getAuthor()->nickName());
         $this::assertEquals('Piekielne wspomnienia o najgorszych współlokatorach', $scraper->getTitle());
         $this::assertEquals('http://joemonster.org/art/38793', $scraper->getAddress());
-        $this::assertEquals($id, $scraper->getId());
+        $this::assertEquals($artId, $scraper->getId());
         $this::assertEquals(103, $scraper->getViewsCount());
         $this::assertEquals(266, $scraper->getOkCount());
         $this::assertEquals(52, $scraper->getCommentsCount());
@@ -30,5 +30,15 @@ class ArtScraperTest extends TestsAbstract
         //$this::assertEquals(304, $scraper->getLikers()->count()); - tested in another test
         $this::assertEquals(false, $scraper->getAgeRestrictions());
         $this::assertEquals('W życiu większości studentów przychodzi czas przeprowadzki do  akademika lub mieszkania dzielonego z innymi ludźmi. Nie zawsze wygląda  to jak w "Przyjaciołach" czy innym amerykańskim serialu...', $scraper->getDescription());
+    }
+
+    public function testArtLikersTest()
+    {
+        $response = $this->mockResponse('<div id="main_article"></div>');
+        $responseLikers = $this->mockResponse(file_get_contents('tests/files/art-likers.html'));
+        $client = $this->mockClient([$response, $responseLikers]);
+
+        $scraper = new ArtScraper(38793, $client);
+        $this::assertEquals(266, $scraper->getLikers()->count());
     }
 }
