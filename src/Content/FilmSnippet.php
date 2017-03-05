@@ -2,7 +2,7 @@
 
 namespace Joe\Content;
 
-class ArtSnippet extends Content
+class FilmSnippet extends Content
 {
     use ThumbnailFieldTrait;
 }
