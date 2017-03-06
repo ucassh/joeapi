@@ -99,7 +99,7 @@ class SendedContent
     {
         $link = $node->find('a.itemTitle');
         $href = isset($link[0]) ? $link[0]->href : '';
-        $beginOfIf = substr($href, 5);
+        $beginOfIf = substr($href, strpos(trim($href, '/'), '/') + 2);
         $description = $node->find('.user-item-description');
         $img = $node->find('img.itemBigThumb');
         $addTime = $node->find('div.small span');
