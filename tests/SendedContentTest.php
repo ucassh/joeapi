@@ -18,6 +18,16 @@ class SendedContentTest extends TestsAbstract
         $this->assertEquals(576, $sended->artPagesQuantity());
     }
 
+    public function testFilmPagesQuantity()
+    {
+        $response = $this->mockResponse(file_get_contents('tests/files/films_list.html'));
+        $client = $this->mockClient($response);
+        $user = $this->mockUser($client);
+
+        $sended = new SendedContent($user);
+        $this->assertEquals(302, $sended->filmPagesQuantity());
+    }
+
     public function testGetArticlesPageCount()
     {
         $response = $this->mockResponse(file_get_contents('tests/files/articles_list.html'));
