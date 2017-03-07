@@ -74,6 +74,12 @@ class SendedContentTest extends TestsAbstract
         $this->assertEquals(0, $articles->count());
     }
 
+    public function testGetImagesPageCount()
+    {
+        $sended = $this->getSendedContentInstance(file_get_contents('tests/files/images-quantity-3-pages.html'));
+        $this->assertEquals(3, $sended->imagesPagesQuantity());
+    }
+
     /**
      * @return SendedContent
      */
