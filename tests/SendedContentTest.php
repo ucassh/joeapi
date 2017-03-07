@@ -11,31 +11,20 @@ class SendedContentTest extends TestsAbstract
 
     public function testArtPagesQuantity()
     {
-        $response = $this->mockResponse(file_get_contents('tests/files/articles_list.html'));
-        $client = $this->mockClient($response);
-        $user = $this->mockUser($client);
-
-        $sended = new SendedContent($user);
+        $sended = $this->getSendedContentInstance(file_get_contents('tests/files/articles_list.html'));
         $this->assertEquals(576, $sended->artPagesQuantity());
     }
 
     public function testFilmPagesQuantity()
     {
-        $response = $this->mockResponse(file_get_contents('tests/files/films_list.html'));
-        $client = $this->mockClient($response);
-        $user = $this->mockUser($client);
-
-        $sended = new SendedContent($user);
+        $sended = $this->getSendedContentInstance(file_get_contents('tests/files/films_list.html'));
         $this->assertEquals(302, $sended->filmPagesQuantity());
     }
 
     public function testGetArticlesPage()
     {
-        $response = $this->mockResponse(file_get_contents('tests/files/articles_list.html'));
-        $client = $this->mockClient($response);
-        $user = $this->mockUser($client);
+        $sended = $this->getSendedContentInstance(file_get_contents('tests/files/articles_list.html'));
 
-        $sended = new SendedContent($user);
         $articles = $sended->getArticlesPage();
         $this->assertEquals(10, $articles->count());
         /** @var ArtSnippet[] $artArr */
@@ -54,11 +43,8 @@ class SendedContentTest extends TestsAbstract
 
     public function testGetFilmsPage()
     {
-        $response = $this->mockResponse(file_get_contents('tests/files/films_list.html'));
-        $client = $this->mockClient($response);
-        $user = $this->mockUser($client);
+        $sended = $this->getSendedContentInstance(file_get_contents('tests/files/films_list.html'));
 
-        $sended = new SendedContent($user);
         $articles = $sended->getFilmsPage();
         $this->assertEquals(10, $articles->count());
         /** @var FilmSnippet[] $filmArr */
@@ -77,22 +63,27 @@ class SendedContentTest extends TestsAbstract
 
     public function testArtPagesQuantityButBoPagesInListing()
     {
-        $response = $this->mockResponse(file_get_contents('tests/files/empty_articles_list.html'));
-        $client = $this->mockClient($response);
-        $user = $this->mockUser($client);
-
-        $sended = new SendedContent($user);
+        $sended = $this->getSendedContentInstance(file_get_contents('tests/files/empty_articles_list.html'));
         $this->assertEquals(0, $sended->artPagesQuantity());
     }
 
     public function testGetArticlesPageCountButBothingFound()
     {
-        $response = $this->mockResponse(file_get_contents('tests/files/empty_articles_list.html'));
+        $sended = $this->getSendedContentInstance(file_get_contents('tests/files/empty_articles_list.html'));
+        $articles = $sended->getArticlesPage();
+        $this->assertEquals(0, $articles->count());
+    }
+
+    /**
+     * @return SendedContent
+     */
+    private function getSendedContentInstance($htmlContent)
+    {
+        $response = $this->mockResponse($htmlContent);
         $client = $this->mockClient($response);
         $user = $this->mockUser($client);
 
         $sended = new SendedContent($user);
-        $articles = $sended->getArticlesPage();
-        $this->assertEquals(0, $articles->count());
+        return $sended;
     }
 }
