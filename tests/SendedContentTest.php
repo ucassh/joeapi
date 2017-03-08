@@ -106,4 +106,14 @@ class SendedContentTest extends TestsAbstract
         $sended = $this->getSendedContentInstance(file_get_contents('tests/files/film.html'));
         $this::assertEquals(Film::class, get_class($sended->getFilm(123)));
     }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage Content not found
+     */
+    public function testNoContent()
+    {
+        $sended = $this->getSendedContentInstance('<body></body>');
+        $sended->getFilm(123);
+    }
 }
