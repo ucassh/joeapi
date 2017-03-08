@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Joe\Content\Art;
 use Joe\Content\ArtSnippet;
 use Joe\Content\FilmSnippet;
 use Joe\User\SendedContent;
@@ -91,5 +92,11 @@ class SendedContentTest extends TestsAbstract
 
         $sended = new SendedContent($user);
         return $sended;
+    }
+
+    public function testGetArt()
+    {
+        $sended = $this->getSendedContentInstance(file_get_contents('tests/files/art.html'));
+        $this::assertEquals(Art::class, get_class($sended->getArt(123)));
     }
 }
