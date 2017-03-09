@@ -141,7 +141,7 @@ class ArtScraper extends ContentScraper
         $this->author = $authorDate[0];
 
         $date = explode(' ', $authorDate[1]);
-        $this->time = isset($date[0])
+        $this->time = isset($date[1])
             ? new \DateTime($date[2] . '-' . TimeHelper::monthNameToNumber($date[1]) . '-' . $date[0] . ' ' . $date[3])
             : null;
     }
