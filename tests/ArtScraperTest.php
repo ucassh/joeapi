@@ -53,4 +53,15 @@ class ArtScraperTest extends TestsAbstract
 
         new ArtScraper(38793, $client);
     }
+
+    public function testPreperingDataProblems()
+    {
+        $response = $this->mockResponse(file_get_contents('tests/files/art-author-date-conditional.html'));
+        $client = $this->mockClient($response);
+
+        $scraper = new ArtScraper(38793, $client);
+        $this::assertNull($scraper->getAddingTime());
+    }
+
+
 }
