@@ -113,7 +113,7 @@ class About
             if ($dl->tag == 'dl') {
                 $content[$block] = $this->getPropertiesFromDl($dl);
             } else {
-                Log::info('Exception was found', [$dl->outertext()]);
+                throw new \Exception('Exception was found' . print_r($dl->outertext(), true));
             }
         }
         return $content;
