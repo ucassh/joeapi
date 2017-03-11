@@ -4,6 +4,7 @@ namespace Tests;
 use Joe\Comment;
 use Joe\Fan;
 use Joe\User;
+use Mockery as m;
 
 class UserTest extends TestsAbstract
 {
@@ -83,4 +84,19 @@ class UserTest extends TestsAbstract
         $user->setClient($client);
         $user->comments();
     }
+
+    public function testAbout()
+    {
+        m::mock('overload:Joe\User\About');
+
+        $user = new User('taksobietestuje');
+        $about = $user->about();
+
+        $this::assertSame(User\About::class, get_class($about));
+        $about2 = $user->about();
+
+        $this::assertSame($about, $about2);
+    }
+
+
 }
