@@ -6,6 +6,9 @@ use Joe\Fan;
 use Joe\User;
 use Mockery as m;
 
+/**
+ * @preserveGlobalState disabled
+ */
 class UserTest extends TestsAbstract
 {
     public function testGetUserFans()
@@ -96,6 +99,22 @@ class UserTest extends TestsAbstract
         $about2 = $user->about();
 
         $this::assertSame($about, $about2);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testSendedContent()
+    {
+        m::mock('overload:Joe\User\SendedContent');
+
+        $user = new User('taksobietestuje');
+        $sended = $user->sended();
+
+        $this::assertSame(User\SendedContent::class, get_class($sended));
+        $sended2 = $user->sended();
+
+        $this::assertSame($sended, $sended2);
     }
 
 
