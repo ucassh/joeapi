@@ -8,9 +8,9 @@ use Joe\User;
 
 abstract class TestsAbstract extends \PHPUnit_Framework_TestCase
 {
-    public function __construct()
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
-        parent::__construct();
+        parent::__construct($name, $data, $dataName);
         if (!defined('MAX_FILE_SIZE')) {
             define('MAX_FILE_SIZE', 600000000);
         }
