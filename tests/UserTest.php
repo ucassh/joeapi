@@ -88,6 +88,9 @@ class UserTest extends TestsAbstract
         $user->comments();
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testAbout()
     {
         m::mock('overload:Joe\User\About');
