@@ -60,9 +60,7 @@ class About
     protected function prepareAboutDOM()
     {
         if (empty($this->about)) {
-            $res = $this->client->request('GET', Connection::ADDRESS . '/bojownik/' . $this->user->nickName());
-            $body = $res->getBody();
-            $html = HtmlDomParser::str_get_html($body);
+            $html = $this->getPage(Connection::ADDRESS . '/bojownik/' . $this->user->nickName());
 
             /** @var $profilLeft simple_html_dom_node[] */
             $profilLeft = $html->find('div.profilLeft');
@@ -113,7 +111,7 @@ class About
             if ($dl->tag == 'dl') {
                 $content[$block] = $this->getPropertiesFromDl($dl);
             } else {
-                throw new \Exception('Exception was found' . print_r($dl->outertext(), true));
+                //throw new \Exception('Exception was found' . print_r($dl->outertext(), true));
             }
         }
         return $content;
