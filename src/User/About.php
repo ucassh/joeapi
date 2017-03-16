@@ -80,7 +80,7 @@ class About
     {
         $this->prepareAboutDOM();
         $innerText = $this->about->innertext();
-        return strip_tags(substr($innerText, 0, strpos($innerText, '<dl>')));
+        return trim(strip_tags(substr($innerText, 0, strpos($innerText, '<dl>'))));
     }
 
     /**
