@@ -101,6 +101,7 @@ class About
      */
     public function getCategorisedInfo()
     {
+        $this->prepareAboutDOM();
         $content = [];
         $headers = $this->about->find('h3');
         foreach ($headers as $h) {
@@ -122,6 +123,7 @@ class About
      */
     public function getLocalization()
     {
+        $this->prepareAboutDOM();
         $scripts = $this->about->find('script');
         if (isset($scripts[1])) {
             return  str_replace(';', ";\n", $scripts[1]->innertext());
