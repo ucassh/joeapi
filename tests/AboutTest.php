@@ -18,10 +18,27 @@ class AboutTest extends TestsAbstract
         $this->about = new About($user);
     }
 
+    protected function tearDown()
+    {
+        $this->about = null;
+    }
 
     public function testHelloMessage()
     {
         $hello = $this->about->getHelloMessage();
         $this::assertSame('Od 22 stycznia 2017   Nic ciekawego', $hello);
+    }
+
+    public function testBasicInfo()
+    {
+        $basicInfo = $this->about->getBasicInfo();
+        $this::assertArrayHasKey('Status uczelniany', $basicInfo);
+        $this::assertArrayHasKey('Stan', $basicInfo);
+        $this::assertArrayHasKey('Miasto', $basicInfo);
+        $this::assertArrayHasKey('Zajęcie', $basicInfo);
+        $this::assertArrayHasKey('Zainteresowania ekstremalne', $basicInfo);
+        $this::assertArrayHasKey('WWW', $basicInfo);
+        $this::assertArrayHasKey('Status konta', $basicInfo);
+        $this::assertArrayHasKey('GG', $basicInfo);
     }
 }
