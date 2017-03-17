@@ -81,4 +81,11 @@ class AboutTest extends TestsAbstract
         $this::assertArrayHasKey('Profil oglądany', $acitivity);
 
     }
+
+    public function testLocalization()
+    {
+        $localization = $this->about->getLocalization();
+        $this::assertCount(2, $localization);
+    }
+
 }
