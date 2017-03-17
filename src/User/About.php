@@ -126,8 +126,10 @@ class About
         $this->prepareAboutDOM();
         $scripts = $this->about->find('script');
         if (isset($scripts[1])) {
-            return  str_replace(';', ";\n", $scripts[1]->innertext());
+            $matches = [];
+            preg_match_all('/point\.l(?:ong|at) = ([0-9]+\.[0-9]+);/', $scripts[1], $matches);
+            return  $matches[1];
         }
-        return '';
+        return [];
     }
 }
