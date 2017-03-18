@@ -84,7 +84,7 @@ class About
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getBasicInfo()
     {
@@ -93,7 +93,7 @@ class About
         if (isset($dls[0])) {
             return $this->getPropertiesFromDl($dls[0]);
         }
-        return '';
+        return [];
     }
 
     /**
