@@ -28,4 +28,10 @@ class AboutEmptyTest extends TestsAbstract
         $basicInfo = $this->about->getBasicInfo();
         $this::assertEmpty($basicInfo);
     }
+
+    public function testEmptyLocalization()
+    {
+        $localization = $this->about->getLocalization();
+        $this::assertEmpty($localization);
+    }
 }
