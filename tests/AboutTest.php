@@ -88,4 +88,10 @@ class AboutTest extends TestsAbstract
         $this::assertCount(2, $localization);
     }
 
+    public function testGetAllData()
+    {
+        $allData = $this->about->getAllData();
+        $this::assertCount(6, $allData);
+    }
+
 }
