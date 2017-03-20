@@ -3,17 +3,16 @@
 namespace Joe;
 
 use Joe\Helper\CommentsHelper;
-use Joe\Http\Client;
 use Joe\User\About;
+use Joe\User\ClientTrait;
 use Joe\User\SendedContent;
 use Sunra\PhpSimple\HtmlDomParser;
 
 class User
 {
-    private $nickName;
 
-    /** @var Client $client */
-    private $client;
+    use ClientTrait;
+    private $nickName;
 
     /** @var  About $about */
     private $about;
@@ -98,22 +97,6 @@ class User
     public function subscriptions()
     {
 
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getClient()
-    {
-        return $this->client;
-    }
-
-    /**
-     * @param mixed $client
-     */
-    public function setClient($client)
-    {
-        $this->client = $client;
     }
 
     /**
