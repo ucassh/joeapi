@@ -2,27 +2,8 @@
 
 namespace Tests;
 
-use Joe\User\About;
-
-class AboutTest extends TestsAbstract
+class AboutTest extends AboutAbstract
 {
-    /** @var About */
-    private $about;
-
-    protected function setUp()
-    {
-        $response = $this->mockResponse(file_get_contents('tests/files/taksobietestuje.about.html'));
-        $client = $this->mockClient($response);
-        $user = $this->mockUser($client);
-
-        $this->about = new About($user);
-    }
-
-    protected function tearDown()
-    {
-        $this->about = null;
-    }
-
     public function testHelloMessage()
     {
         $hello = $this->about->getHelloMessage();
@@ -94,4 +75,8 @@ class AboutTest extends TestsAbstract
         $this::assertCount(6, $allData);
     }
 
+    protected function getContent()
+    {
+        return file_get_contents('tests/files/taksobietestuje.about.html');
+    }
 }
