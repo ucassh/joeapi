@@ -120,5 +120,15 @@ class UserTest extends TestsAbstract
         $this::assertSame($sended, $sended2);
     }
 
+    public function testPlaceholders()
+    {
+        $user = new User('taksobietestuje');
+        $user->wardrobe();
+        $user->fanOf();
+        $user->clubs();
+        $user->blog();
+        $user->subscriptions();
+    }
+
 
 }
