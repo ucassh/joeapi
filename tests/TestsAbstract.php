@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Joe\Connection;
 use Joe\Http\Client;
 use Joe\Http\Response;
 use Joe\User;
@@ -68,5 +69,13 @@ abstract class TestsAbstract extends \PHPUnit_Framework_TestCase
             ->method('nickName')
             ->willReturn('taksobietestuje');
         return $user;
+    }
+
+    protected function mockConection($login, $pass)
+    {
+        return $this->getMockBuilder(Connection::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getClient', 'nickName'])
+            ->getMock();
     }
 }
