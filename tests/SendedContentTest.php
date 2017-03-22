@@ -31,7 +31,7 @@ class SendedContentTest extends TestsAbstract
         $this->assertEquals(10, $articles->count());
         /** @var ArtSnippet[] $artArr */
         $artArr = $articles->getArrayCopy();
-        //$this->assertEquals('profil', $artArr[0]->getAuthor()->nickName()); // not gonna test this, cause nickname cames from mockobject, and it's not same as in mockfile
+        $this->assertEquals('taksobietestuje', $artArr[0]->getAuthor()->nickName());
         $this->assertEquals(new \DateTime('2017-02-09'), $artArr[0]->getAddingTime());
         $this->assertEquals(77, $artArr[0]->getCommentsCount());
         $this->assertEquals(38744, $artArr[0]->getId());
@@ -51,7 +51,7 @@ class SendedContentTest extends TestsAbstract
         $this->assertEquals(10, $articles->count());
         /** @var FilmSnippet[] $filmArr */
         $filmArr = $articles->getArrayCopy();
-        //$this->assertEquals('profil', $filmArr[0]->getAuthor()->nickName()); // not gonna test this, cause nickname cames from mockobject, and it's not same as in mockfile
+        $this->assertEquals('taksobietestuje', $filmArr[0]->getAuthor()->nickName()); // not gonna test this, cause nickname cames from mockobject, and it's not same as in mockfile
         $this->assertEquals(new \DateTime('2017-03-04'), $filmArr[0]->getAddingTime());
         $this->assertEquals(36, $filmArr[0]->getCommentsCount());
         $this->assertEquals(82233, $filmArr[0]->getId());
@@ -87,7 +87,10 @@ class SendedContentTest extends TestsAbstract
      */
     private function getSendedContentInstance($htmlContent)
     {
-        $response = $this->mockResponse($htmlContent);
+        $response = [];
+        foreach ((array) $htmlContent as $content) {
+            $response[] = $this->mockResponse($content);
+        }
         $client = $this->mockClient($response);
         $user = $this->mockUser($client);
 
@@ -97,8 +100,19 @@ class SendedContentTest extends TestsAbstract
 
     public function testGetArt()
     {
-        $sended = $this->getSendedContentInstance(file_get_contents('tests/files/art.html'));
-        $this::assertEquals(Art::class, get_class($sended->getArt(123)));
+        $sended = $this->getSendedContentInstance([
+            file_get_contents('tests/files/art.html'),
+            file_get_contents('tests/files/art-likers.html')
+        ]);
+        $art = $sended->getArt(123);
+        $this::assertEquals(Art::class, get_class($art));
+        $this::assertCount(5, $art->getTags());
+        $this::assertEquals(['lokator', 'królik', 'seks', 'higiena', 'kradzież'], $art->getTags());
+        $this::assertEquals('W życiu większości studentów przychodzi czas przeprowadzki do  akademika lub mieszkania dzielonego z innymi ludźmi. Nie zawsze wygląda  to jak w "Przyjaciołach" czy innym amerykańskim serialu...', $art->getDescription());
+        $this::assertEquals(false, $art->getAgeRestrictions());
+        $this::assertEquals(29, $art->getComments()->count());
+        $this::assertEquals(25, $art->getNotOkCount());
+        $this::assertEquals(266, $art->getLikers()->count());
     }
 
     public function testGetFilm()
