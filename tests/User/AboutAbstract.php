@@ -1,8 +1,9 @@
 <?php
 
-namespace Tests;
+namespace Tests\User;
 
 use Joe\User\About;
+use Tests\TestsAbstract;
 
 abstract class AboutAbstract extends TestsAbstract
 {

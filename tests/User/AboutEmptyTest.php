@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use Tests\User\AboutAbstract;
+
 class AboutEmptyTest extends AboutAbstract
 {
     protected function tearDown()

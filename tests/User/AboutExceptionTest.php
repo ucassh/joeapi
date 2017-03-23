@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use Tests\User\AboutAbstract;
+
 class AboutExceptionTest extends AboutAbstract
 {
     /**
