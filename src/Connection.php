@@ -23,9 +23,9 @@ class Connection
     {
         Connection::$httpClient = new GuzzleClient();
 
-        Connection::$httpClient->request('GET', Connection::ADDRESS . '/logowanie', ['headers' => []]);
+        Connection::$httpClient->request('HEAD', Connection::ADDRESS . '/logowanie', ['headers' => []]);
 
-        Connection::$httpClient->request('POST', Connection::ADDRESS . '/login_check', [
+        Connection::$httpClient->request('POST', 'https://joemonster.org/login_check', [
             'form_params' => [
                 '_username' => $login,
                 '_password' => $password,
