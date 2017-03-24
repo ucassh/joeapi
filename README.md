@@ -1,5 +1,6 @@
 ## Synopsis
 
+Unofficial joemonster.org API. At the moment it's read only, but I hope so that future will bring ability to writing.
 
 ## Code Example
 
@@ -7,7 +8,7 @@ Open JoeMonster session and browse basic description of `taksobietestuje` profil
 ```
 $joe = new \Joe\Monster('login', 'password');
 $user = $joe->user('taksobietestuje');
-$user->about()->getBasicInfo()
+$user->about()->getHelloMessage()
 ```
 
 ## Installation
