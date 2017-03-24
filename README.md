@@ -3,6 +3,12 @@
 
 ## Code Example
 
+Open JoeMonster session and browse basic description of `taksobietestuje` profile:
+```
+$joe = new \Joe\Monster('login', 'password');
+$user = $joe->user('taksobietestuje');
+$user->about()->getBasicInfo()
+```
 
 ## Installation
 
