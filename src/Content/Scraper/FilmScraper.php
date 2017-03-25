@@ -2,7 +2,7 @@
 
 namespace Joe\Content\Scraper;
 
-use Joe\Content\FilmFactory;
+use Joe\Content\Factory\FilmFactory;
 use Joe\Helper\CommentsHelper;
 use Joe\User;
 use simplehtmldom_1_5\simple_html_dom;

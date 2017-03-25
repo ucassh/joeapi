@@ -2,7 +2,7 @@
 
 namespace Joe\Content\Scraper;
 
-use Joe\Content\ArtFactory;
+use Joe\Content\Factory\ArtFactory;
 use Joe\Helper\CommentsHelper;
 use Joe\Helper\TimeHelper;
 use Joe\User;

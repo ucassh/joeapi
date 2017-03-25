@@ -1,6 +1,6 @@
 <?php
 
-namespace Joe\Content;
+namespace Joe\Content\Factory;
 
 use Joe\Content\Scraper\ContentScraper;
 

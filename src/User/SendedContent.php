@@ -3,10 +3,10 @@
 namespace Joe\User;
 
 use Joe\Connection;
-use Joe\Content\ContentFactory;
+use Joe\Content\Factory\ContentFactory;
 use Joe\Content\Scraper\ArtScraper;
 use Joe\Content\Scraper\FilmScraper;
-use Joe\Content\SnippetFactory;
+use Joe\Content\Factory\SnippetFactory;
 use Joe\User;
 use simplehtmldom_1_5\simple_html_dom_node;
 
