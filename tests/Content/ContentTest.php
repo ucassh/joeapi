@@ -63,5 +63,43 @@ class ContentTest extends TestsAbstract
         $this::assertSame($viewsCount, $content->getViewsCount());
     }
 
+    /**
+     * @depends clone testCreate
+     */
+    public function testContentNullGettersAndSetters(Content $content)
+    {
+        $content->setAddingTime($addingTime = null);
+        $this::assertSame($addingTime, $content->getAddingTime());
+
+        $content->setAgeRestrictions($ageRestrictions = null);
+        $this::assertSame($ageRestrictions, $content->getAgeRestrictions());
+
+        $content->setCommentsCount($commentsCount = null);
+        $this::assertSame($commentsCount, $content->getCommentsCount());
+
+        $content->setDescription($description = null);
+        $this::assertSame($description, $content->getDescription());
+
+        $content->setNotOkCount($notOkCount = null);
+        $this::assertSame($notOkCount, $content->getNotOkCount());
+
+        $content->setOkCount($okCount = null);
+        $this::assertSame($okCount, $content->getOkCount());
+
+        $content->setLink($link = null);
+        $this::assertSame($link, $content->getLink());
+
+        $content->setTags($tags = null);
+        $this::assertSame($tags, $content->getTags());
+
+        $content->setTitle($title = null);
+        $this::assertSame($title, $content->getTitle());
+
+        $content->setContent($textContent = null);
+        $this::assertSame($textContent, $content->getContent());
+
+        $content->setViewsCount($viewsCount = null);
+        $this::assertSame($viewsCount, $content->getViewsCount());
+    }
 
 }
