@@ -263,7 +263,7 @@ abstract class Content
      * @param $comments
      * @return $this
      */
-    public function setComments(\ArrayObject $comments = null)
+    public function setComments(\ArrayObject $comments)
     {
         $this->comments = $comments;
         return $this;
