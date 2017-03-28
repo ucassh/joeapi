@@ -10,15 +10,15 @@ class ChildFilmFactory extends FilmFactory{
      */
     public function getClazz()
     {
-        return $this->clazz;
+        return $this->getClass();
     }
 }
 
 class FilmFactoryTest extends TestsAbstract
 {
-    public function testCreateArtFactory()
+    public function testCreateFIlmFactory()
     {
         $child = new ChildFilmFactory();
-        $this::assertSame('Film', $child->getClazz());
+        $this::assertSame('Joe\Content\Film', $child->getClazz());
     }
 }

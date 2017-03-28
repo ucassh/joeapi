@@ -10,7 +10,7 @@ class ChildArtFactory extends ArtFactory{
      */
     public function getClazz()
     {
-        return $this->clazz;
+        return $this->getClass();
     }
 }
 
@@ -20,6 +20,6 @@ class ArtFactoryTest extends TestsAbstract
     public function testCreateArtFactory()
     {
         $child = new ChildArtFactory();
-        $this::assertSame('Art', $child->getClazz());
+        $this::assertSame('Joe\Content\Art', $child->getClazz());
     }
 }
