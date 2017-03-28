@@ -6,11 +6,6 @@ use Joe\Content\Scraper\ContentScraper;
 
 class FilmFactory extends ContentFactory
 {
-    public function __construct()
-    {
-        $this->clazz = 'Film';
-    }
-
     public function create(array $params = [])
     {
         return parent::create($params)
@@ -23,5 +18,8 @@ class FilmFactory extends ContentFactory
             ->setCategory($scraper->getCategory());
     }
 
-
+    protected function getClass()
+    {
+        return 'Joe\Content\Film';
+    }
 }

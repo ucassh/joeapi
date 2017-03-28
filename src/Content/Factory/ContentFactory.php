@@ -6,14 +6,13 @@ use Joe\Content\Scraper\ContentScraper;
 
 abstract class ContentFactory
 {
-    protected $clazz;
     /**
      * @param array $params
      * @return Content
      */
     public function create(array $params = [])
     {
-        $cls = 'Joe\Content\\'.$this->clazz;
+        $cls = $this->getClass();
         /** @var Content $content */
         $content = new $cls(isset($params['id']) ? $params['id'] : null);
         return $content->setAddingTime(isset($params['time']) ? $params['time'] : null)
@@ -56,4 +55,6 @@ abstract class ContentFactory
             'description' => $scraper->getDescription(),
         ]);
     }
+
+    protected abstract function getClass();
 }

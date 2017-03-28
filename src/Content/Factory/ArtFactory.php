@@ -4,8 +4,8 @@ namespace Joe\Content\Factory;
 
 class ArtFactory extends ContentFactory
 {
-    public function __construct()
+    protected function getClass()
     {
-        $this->clazz = 'Art';
+        return 'Joe\Content\Art';
     }
 }
