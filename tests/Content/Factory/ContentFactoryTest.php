@@ -33,4 +33,20 @@ class ContentFactoryTest extends TestsAbstract
         $this->data['description'] = 'tldr';
     }
 
+    public function testCreateObjectByContentFactory()
+    {
+        $class = 'Joe\Content\Art';
+        $factory = $this->getMockForAbstractClass(ContentFactory::class);
+        $factory
+            ->expects($this::any())
+            ->method('getClass')
+            ->willReturn($class);
+
+        $content = $factory->create($this->data);
+        $this::assertSame($class, get_class($content));
+
+        return $content;
+    }
+
+
 }
