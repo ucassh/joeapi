@@ -8,9 +8,14 @@ use Joe\User;
 class ContentFactoryTest extends TestsAbstract
 {
     protected $data;
+    protected $content;
+    protected $class;
+
 
     protected function setUp()
     {
+        $this->class = 'Joe\Content\Art';
+
         $user = $this->getMockBuilder(User::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -31,21 +36,42 @@ class ContentFactoryTest extends TestsAbstract
         $this->data['likers'] = new \ArrayObject;
         $this->data['tags'] = ['tag1', 'tag2', 'tag3', 'tag4'];
         $this->data['description'] = 'tldr';
-    }
 
-    public function testCreateObjectByContentFactory()
-    {
-        $class = 'Joe\Content\Art';
         $factory = $this->getMockForAbstractClass(ContentFactory::class);
         $factory
             ->expects($this::any())
             ->method('getClass')
-            ->willReturn($class);
+            ->willReturn($this->class);
 
-        $content = $factory->create($this->data);
-        $this::assertSame($class, get_class($content));
+        $this->content = $factory->create($this->data);
+    }
 
-        return $content;
+    public function testCreateObjectByContentFactory()
+    {
+
+        $this::assertSame($this->class, get_class($this->content));
+    }
+
+
+    public function testContentValues()
+    {
+        $content = $this->content;
+        $this::assertSame($this->data['id'], $content->getId());
+        $this::assertSame($this->data['time'], $content->getAddingTime());
+        $this::assertSame($this->data['author'], $content->getAuthor());
+        $this::assertSame($this->data['link'], $content->getLink());
+        $this::assertSame($this->data['comments_count'], $content->getCommentsCount());
+        $this::assertSame($this->data['content'], $content->getContent());
+        $this::assertSame($this->data['title'], $content->getTitle());
+        $this::assertSame($this->data['ok_count'], $content->getOkCount());
+        $this::assertSame($this->data['not_ok_count'], $content->getNotOkCount());
+        $this::assertSame($this->data['views_count'], $content->getViewsCount());
+        $this::assertSame($this->data['age_restrictions'], $content->getAgeRestrictions());
+        $this::assertSame($this->data['comments'], $content->getComments());
+        $this::assertSame($this->data['likers'], $content->getLikers());
+        $this::assertSame($this->data['tags'], $content->getTags());
+        $this::assertSame($this->data['description'], $content->getDescription());
+
     }
 
 
