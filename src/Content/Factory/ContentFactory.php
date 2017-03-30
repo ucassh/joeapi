@@ -2,6 +2,7 @@
 
 namespace Joe\Content\Factory;
 
+use Joe\Content\Content;
 use Joe\Content\Scraper\ContentScraper;
 
 abstract class ContentFactory

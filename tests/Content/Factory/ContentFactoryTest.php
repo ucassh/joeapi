@@ -48,13 +48,13 @@ class ContentFactoryTest extends TestsAbstract
 
     public function testCreateObjectByContentFactory()
     {
-
         $this::assertSame($this->class, get_class($this->content));
     }
 
 
     public function testContentValues()
     {
+        /** @var Content $content */
         $content = $this->content;
         $this::assertSame($this->data['id'], $content->getId());
         $this::assertSame($this->data['time'], $content->getAddingTime());
