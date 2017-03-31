@@ -78,4 +78,21 @@ abstract class TestsAbstract extends \PHPUnit_Framework_TestCase
             ->setMethods(['getClient', 'nickName'])
             ->getMock();
     }
+
+    protected function mockArtScraper($data)
+    {
+        $scraper = $this->getMockBuilder(ArtScraper::class)
+            ->disableOriginalConstructor()
+            ->setMethods(array_keys($data))
+            ->getMock();
+
+        foreach ($data as $method => $value) {
+            $scraper
+                ->expects($this->any())
+                ->method($method)
+                ->willReturn($value);
+        }
+
+        return $scraper;
+    }
 }
