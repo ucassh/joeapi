@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Joe\Connection;
+use Joe\Content\Scraper\ArtScraper;
 use Joe\Http\Client;
 use Joe\Http\Response;
 use Joe\User;
