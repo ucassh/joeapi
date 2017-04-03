@@ -24,12 +24,12 @@ class SendedContent
 
     public function getArticlesPage($page = 1)
     {
-        return $this->getContentPage($page, new SnippetFactory('ArtSnippet'));
+        return $this->getContentPage($page, new SnippetFactory('Joe\Content\ArtSnippet'));
     }
 
     public function getFilmsPage($page = 1)
     {
-        return $this->getContentPage($page, new SnippetFactory('FilmSnippet'));
+        return $this->getContentPage($page, new SnippetFactory('Joe\Content\FilmSnippet'));
     }
 
     protected function getContentPage($page = 1, ContentFactory $factory)

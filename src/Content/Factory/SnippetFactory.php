@@ -13,7 +13,7 @@ class SnippetFactory extends ContentFactory
 
     protected function getClass()
     {
-        return 'Joe\Content\\' . $this->clazz;
+        return $this->clazz;
     }
 
     public function create(array $params = [])
