@@ -37,12 +37,12 @@ class CommentsHelper
             $commBody = HtmlDomParser::str_get_html($comment['maincomment']['html']);
 
             $notOkNode = $commBody->find('.commok2 a');
-            if (!isset($notOkNode[0])) {
-                throw new \Exception("Node not found - new structure!" . $comment['maincomment']['html']);
-            }
             $notOkCount = isset($notOkNode[0]) ? (int)trim($notOkNode[0]->text()) : 0;
             $message = trim($commBody->find('.commentDesc span')[0]->text());
             $links = $commBody->find('.commentBoxHeader a');
+            if (empty($links) || empty($message)) {
+                throw new \Exception("Node not found - new structure!" . $comment['maincomment']['html']);
+            }
 
             $comment['maincomment']['link'] = $links[count($links) - 1]->href;
             $comment['maincomment']['user'] = new User($comment['maincomment']['uname']);
