@@ -8,6 +8,7 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 class CommentsHelper
 {
+    protected static $usersMap;
     /**
      * @param $content
      * @return \ArrayObject
@@ -26,7 +27,7 @@ class CommentsHelper
             }
         }
         if ($commentsLine === '') {
-            throw new \Exception('No comments found. Probably You are not logged in.');
+            throw new \Exception('No comments found');
         }
 
         $comments = json_decode($commentsLine, true);
@@ -38,12 +39,16 @@ class CommentsHelper
             $notOkCount = isset($notOkNode[0]) ? (int)trim($notOkNode[0]->text()) : 0;
             $message = trim($commBody->find('.commentDesc span')[0]->text());
             $links = $commBody->find('.commentBoxHeader a');
+            $nickName = $comment['maincomment']['uname'];
+            if (!isset(self::$usersMap[$nickName])) {
+                self::$usersMap[$nickName] = new User($nickName);
+            }
             if (empty($links) || empty($message)) {
                 throw new \Exception("Node not found - new structure!" . $comment['maincomment']['html']);
             }
 
             $comment['maincomment']['link'] = $links[count($links) - 1]->href;
-            $comment['maincomment']['user'] = new User($comment['maincomment']['uname']);
+            $comment['maincomment']['user'] = self::$usersMap[$nickName];
             $comment['maincomment']['notOkCount'] = $notOkCount;
             $comment['maincomment']['html'] = $message;
 
