@@ -3,7 +3,6 @@
 namespace Joe\Helper;
 
 use Joe\CommentFactory;
-use Joe\Log;
 use Joe\User;
 use Sunra\PhpSimple\HtmlDomParser;
 
@@ -11,7 +10,6 @@ class CommentsHelper
 {
     /**
      * @param $content
-     * @param $comment
      * @return \ArrayObject
      * @throws \Exception
      */
