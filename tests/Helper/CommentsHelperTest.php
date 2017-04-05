@@ -14,4 +14,13 @@ class CommentsHelperTest extends PHPUnit_Framework_TestCase
         $comments = file_get_contents('tests/files/comment-line-exception.txt');
         CommentsHelper::extractComments($comments);
     }
+
+    /**
+     * @expectedException        \Exception
+     * @expectedExceptionMessage No comments found
+     */
+    public function testGetUserCommentsButNoCommentsFound()
+    {
+        CommentsHelper::extractComments('');
+    }
 }

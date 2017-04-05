@@ -74,19 +74,6 @@ class UserTest extends TestsAbstract
         $this->assertSame('/art/4444#cm2222', $comment[1]->getLink(), "Link is incorrect");
     }
 
-    /**
-     * @expectedException        \Exception
-     * @expectedExceptionMessage No comments found. Probably You are not logged in.
-     */
-    public function testGetUserCommentsButNoCommentsFound()
-    {
-        $response = $this->mockResponse('');
-        $client = $this->mockClient($response);
-
-        $user = new User('taksobietestuje');
-        $user->setClient($client);
-        $user->comments();
-    }
 
     /**
      * @runInSeparateProcess
