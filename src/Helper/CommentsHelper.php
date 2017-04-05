@@ -8,13 +8,13 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 class CommentsHelper
 {
-    protected static $usersMap;
+    protected $usersMap;
     /**
      * @param $content
      * @return \ArrayObject
      * @throws \Exception
      */
-    public static function extractComments($content)
+    public function extractComments($content)
     {
         $lines = preg_split("/\n/", $content);
         $commentsLine = '';
@@ -40,15 +40,15 @@ class CommentsHelper
             $message = trim($commBody->find('.commentDesc span')[0]->text());
             $links = $commBody->find('.commentBoxHeader a');
             $nickName = $comment['maincomment']['uname'];
-            if (!isset(self::$usersMap[$nickName])) {
-                self::$usersMap[$nickName] = new User($nickName);
+            if (!isset($this->usersMap[$nickName])) {
+                $this->usersMap[$nickName] = new User($nickName);
             }
             if (empty($links) || empty($message)) {
                 throw new \Exception("Node not found - new structure!" . $comment['maincomment']['html']);
             }
 
             $comment['maincomment']['link'] = $links[count($links) - 1]->href;
-            $comment['maincomment']['user'] = self::$usersMap[$nickName];
+            $comment['maincomment']['user'] = $this->usersMap[$nickName];
             $comment['maincomment']['notOkCount'] = $notOkCount;
             $comment['maincomment']['html'] = $message;
 

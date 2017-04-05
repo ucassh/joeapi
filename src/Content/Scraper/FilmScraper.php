@@ -84,7 +84,7 @@ class FilmScraper extends ContentScraper
             return str_replace("\t", PHP_EOL, $val->innertext());
         }, $this->html->find('script')));
 
-        return CommentsHelper::extractComments($scripts);
+        return (new CommentsHelper)->extractComments($scripts);
     }
 
     public function getLikers()

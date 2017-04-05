@@ -55,7 +55,7 @@ class User
     public function comments()
     {
         $res = $this->client->request('GET', Connection::ADDRESS . '/bojownik/' . $this->nickName . '/komentarze');
-        return CommentsHelper::extractComments($res->getBody());
+        return (new CommentsHelper)->extractComments($res->getBody());
     }
 
     public function about()

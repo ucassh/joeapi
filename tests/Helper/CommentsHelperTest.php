@@ -12,7 +12,7 @@ class CommentsHelperTest extends PHPUnit_Framework_TestCase
     public function testExtractComments()
     {
         $comments = file_get_contents('tests/files/comment-line-exception.txt');
-        CommentsHelper::extractComments($comments);
+        (new CommentsHelper)->extractComments($comments);
     }
 
     /**
@@ -21,13 +21,13 @@ class CommentsHelperTest extends PHPUnit_Framework_TestCase
      */
     public function testGetUserCommentsButNoCommentsFound()
     {
-        CommentsHelper::extractComments('');
+        (new CommentsHelper)->extractComments('');
     }
 
     public function testGetUserComments()
     {
         $comments = file_get_contents('tests/files/comments-payed-account.html');
-        $commentList = CommentsHelper::extractComments($comments);
+        $commentList = (new CommentsHelper)->extractComments($comments);
 
         $this->assertSame(ArrayObject::class, get_class($commentList));
 
