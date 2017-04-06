@@ -32,6 +32,9 @@ class UserTest extends TestsAbstract
         $this->assertEquals("2015-06-11 20:58:15", $fanSince, 'Incorrect \'became a fan\' time ');
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testGetUserComments()
     {
         $response = $this->mockResponse('');
