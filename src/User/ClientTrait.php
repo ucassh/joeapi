@@ -10,7 +10,7 @@ trait ClientTrait
 {
 
     /** @var Client $client */
-    private $client;
+    protected $client;
 
     /**
      * @return mixed
