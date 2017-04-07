@@ -4,6 +4,7 @@ namespace Joe\User;
 
 use Joe\Http\Client;
 use Joe\Http\Response;
+use Joe\Http\ResponseInterpreter;
 use Sunra\PhpSimple\HtmlDomParser;
 
 trait ClientTrait
@@ -45,5 +46,16 @@ trait ClientTrait
         }
 
         return $dom;
+    }
+
+    public function postData($address, $data, ResponseInterpreter $interpreter = null)
+    {
+        /** @var Response $res */
+        $res = $this->client->request('POST', $address, ['form_params' => [$data]]);
+        if ($interpreter) {
+            return;
+        }
+
+        return $res;
     }
 }
