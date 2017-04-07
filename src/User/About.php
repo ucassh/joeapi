@@ -6,7 +6,6 @@ use Joe\Connection;
 use Joe\Log;
 use Joe\User;
 use simplehtmldom_1_5\simple_html_dom_node;
-use Sunra\PhpSimple\HtmlDomParser;
 
 class About
 {
@@ -16,6 +15,9 @@ class About
 
     /** @var $profilLeft simple_html_dom_node[] */
     private $about;
+
+    private $content;
+    private $html;
 
     public function __construct(User $user)
     {
@@ -60,10 +62,10 @@ class About
     protected function prepareAboutDOM()
     {
         if (empty($this->about)) {
-            $html = $this->getPage(Connection::ADDRESS . '/bojownik/' . $this->user->nickName());
+            $this->html = $this->getPage(Connection::ADDRESS . '/bojownik/' . $this->user->nickName());
 
             /** @var $profilLeft simple_html_dom_node[] */
-            $profilLeft = $html->find('div.profilLeft');
+            $profilLeft = $this->html->find('div.profilLeft');
 
             if (!isset($profilLeft[0])) {
                 throw new \Exception('Object containing informations was not found.');
@@ -131,5 +133,15 @@ class About
             return  $matches[1];
         }
         return [];
+    }
+
+    public function getId()
+    {
+        $this->prepareAboutDOM();
+        if (!isset($this->content['id'])) {
+            $id = $this->html->find('#elementid');
+            $this->content['id'] = $id[0]->value;
+        }
+        return $this->content['id'];
     }
 }
