@@ -2,11 +2,11 @@
 
 namespace Joe;
 
+use Joe\Content\Scraper\FansScraper;
 use Joe\Helper\CommentsHelper;
 use Joe\User\About;
 use Joe\User\ClientTrait;
 use Joe\User\SendedContent;
-use Sunra\PhpSimple\HtmlDomParser;
 
 class User
 {
@@ -31,25 +31,7 @@ class User
      */
     public function fans()
     {
-        $res = $this->client->request('GET', Connection::ADDRESS . '/bojownik/' . $this->nickName . '/fani');
-        $body = $res->getBody();
-        $html = HtmlDomParser::str_get_html($body);
-
-        $collection = new \ArrayObject();
-        foreach ($html->find('.avatar') as $element) {
-            $link = $element->firstChild()->href;
-            $id = substr($link, strrpos($link, '/') +1);
-
-            $div = $element->find('div');
-            $since = $div[0]->title;
-            $since = new \DateTime($since);
-
-            $fan = new Fan($id, $this, $since);
-
-            $collection->append($fan);
-        }
-
-        return $collection;
+        return (new FansScraper($this, $this->client))->fans();
     }
 
     public function comments()
@@ -81,7 +63,7 @@ class User
 
     public function fanOf()
     {
-
+        return (new FansScraper($this, $this->client))->fanOf();
     }
 
     public function clubs()

@@ -4,8 +4,10 @@ namespace Joe\Content\Scraper;
 
 use Joe\Connection;
 use Joe\Fan;
+use Joe\Http\HtmlResponseInterpreter;
 use Joe\User;
 use Joe\User\ClientTrait;
+use simplehtmldom_1_5\simple_html_dom;
 
 class FansScraper extends AbstractScraper
 {
@@ -34,4 +36,32 @@ class FansScraper extends AbstractScraper
 
         return $collection;
     }
+
+    public function fanOf($page = 1)
+    {
+        /** @var simple_html_dom $html */
+        $html = $this->postData(
+            'http://joemonster.org/ajax.php',
+            [
+                'headers' => [
+                    'X-Requested-With' => 'XMLHttpRequest'
+                ],
+                'form_params' => [
+                    'op' => 'showFav',
+                    'type' => 'user',
+                    'small' => 'false',
+                    'userid' => $this->id->about()->getId(),
+                    'pageID' => $page
+                ]
+            ],
+            new HtmlResponseInterpreter
+        );
+        $collection = new \ArrayObject;
+        foreach ($html->find('span') as $item) {
+            $collection->append(new User(trim($item->text())));
+        }
+
+        return $collection;
+    }
+
 }
