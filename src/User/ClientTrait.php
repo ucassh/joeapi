@@ -48,12 +48,13 @@ trait ClientTrait
         return $dom;
     }
 
-    public function postData($address, $data, ResponseInterpreter $interpreter = null)
+    public function postData($address, $options = [], ResponseInterpreter $interpreter = null)
     {
         /** @var Response $res */
-        $res = $this->client->request('POST', $address, ['form_params' => [$data]]);
+        $res = $this->client->request('POST', $address, $options);
+
         if ($interpreter) {
-            return;
+            return $interpreter->process($res);
         }
 
         return $res;
