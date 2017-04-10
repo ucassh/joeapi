@@ -31,7 +31,7 @@ class ArtScraper extends ContentScraper
 
     public function getTitle()
     {
-        $title = $this->html->find('.title');
+        $title = $this->content->find('.title');
         return isset($title[0]) ? trim($title[0]->text()) : '';
     }
 
@@ -61,14 +61,14 @@ class ArtScraper extends ContentScraper
 
     public function getContent()
     {
-        $content = $this->html->find('div#arcik');
+        $content = $this->content->find('div#arcik');
         return isset($content[0]) ? $content[0]->innertext() : '';
 
     }
 
     public function getNotOkCount()
     {
-        $notOkCount = $this->html->find('div#objectNotOkID');
+        $notOkCount = $this->content->find('div#objectNotOkID');
         return isset($notOkCount[0]) ? (int)$notOkCount[0]->text() : 0;
 
     }
@@ -77,14 +77,14 @@ class ArtScraper extends ContentScraper
     {
         return array_map(function (simple_html_dom_node $val) {
             return $val->text();
-        }, $this->html->find('.tag'));
+        }, $this->content->find('.tag'));
     }
 
     public function getComments()
     {
         $scripts = implode(PHP_EOL, array_map(function (simple_html_dom_node $val) {
             return str_replace("\t", PHP_EOL, $val->innertext());
-        }, $this->html->find('script')));
+        }, $this->content->find('script')));
 
         return (new CommentsHelper)->extractComments($scripts);
     }
@@ -101,7 +101,7 @@ class ArtScraper extends ContentScraper
 
     public function getAgeRestrictions()
     {
-        return count($this->html->find('.sprite-for_adults')) > 0;
+        return count($this->content->find('.sprite-for_adults')) > 0;
     }
 
     public function getAddress()
@@ -111,7 +111,7 @@ class ArtScraper extends ContentScraper
 
     public function getDescription()
     {
-        $content = $this->html->find('div#arcik strong');
+        $content = $this->content->find('div#arcik strong');
         return isset($content[0]) ? trim($content[0]->text()) : '';
     }
 
@@ -125,7 +125,7 @@ class ArtScraper extends ContentScraper
     private function prepareCountsIfNotSet()
     {
         if (empty($this->okCount)) {
-            $counts = $this->html->find('.art-numbers');
+            $counts = $this->content->find('.art-numbers');
             $counts = isset($counts[0]) ? array_map('trim', explode('&nbsp;', $counts[0]->text())) : ['', '', ''];
 
             $this->okCount = (int)$counts[1];
@@ -136,7 +136,7 @@ class ArtScraper extends ContentScraper
 
     private function prepareAuthorAndTimeIfNotSet()
     {
-        $authorDate = $this->html->find('.art-author-date');
+        $authorDate = $this->content->find('.art-author-date');
         $authorDate = isset($authorDate[0]) ? array_map('trim', explode('&middot;', $authorDate[0]->text())) : ['', ''];
         $this->author = $authorDate[0];
 

@@ -75,14 +75,14 @@ class FilmScraper extends ContentScraper
     {
         return array_map(function (simple_html_dom_node $val) {
             return $val->text();
-        }, $this->html->find('span.tags a'));
+        }, $this->content->find('span.tags a'));
     }
 
     public function getComments()
     {
         $scripts = implode(PHP_EOL, array_map(function (simple_html_dom_node $val) {
             return str_replace("\t", PHP_EOL, $val->innertext());
-        }, $this->html->find('script')));
+        }, $this->content->find('script')));
 
         return (new CommentsHelper)->extractComments($scripts);
     }
@@ -105,7 +105,7 @@ class FilmScraper extends ContentScraper
 
     public function getDescription()
     {
-        $title = $this->html->find('#mtvDescription');
+        $title = $this->content->find('#mtvDescription');
         return isset($title[0]) ? trim($title[0]->text()) : '';
     }
 
