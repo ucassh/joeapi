@@ -3,47 +3,25 @@
 namespace Joe\Content\Scraper;
 
 use Joe\Http\Client;
-use Joe\User\ClientTrait;
-use simplehtmldom_1_5\simple_html_dom;
 use simplehtmldom_1_5\simple_html_dom_node;
 
-abstract class ContentScraper
+abstract class ContentScraper extends AbstractScraper
 {
-    use ClientTrait;
+    use PrepareableTrait;
 
-    const ADDRESS = 'http://joemonster.org';
-    protected $id;
-
-    /** @var simple_html_dom_node $html */
-    protected $html;
-
-    public function __construct($id, Client $client) {
-        $this->id = $id;
-        $this->client = $client;
-
+    public function __construct($id, Client $client)
+    {
+        parent::__construct($id, $client);
         $this->prepare();
     }
-
-    protected function prepare()
-    {
-        $html = $this->getPage($this->getAddress());
-
-        $art = $this->contentHtml($html);
-
-        if (empty($art)) {
-            throw new \Exception('Content not found');
-        }
-
-        $this->html = $art;
-    }
-
 
     /**
      * @param $selector
      * @param $index
      * @return simple_html_dom_node|string
      */
-    protected function getElemTxtIfSet($selector, $index = 0){
+    protected function getElemTxtIfSet($selector, $index = 0)
+    {
         $node = $this->getElemIfSet($selector, $index);
         return isset($node) ? trim($node->text()) : '';
     }
@@ -53,28 +31,39 @@ abstract class ContentScraper
      * @param int $index
      * @return null|simple_html_dom_node
      */
-    protected function getElemIfSet($selector, $index = 0){
+    protected function getElemIfSet($selector, $index = 0)
+    {
         $nodes = $this->html->find($selector);
         return isset($nodes[$index]) ? $nodes[$index] : null;
     }
 
-    protected abstract function contentHtml(simple_html_dom $fullHtml = null);
-    public abstract function getSite();
+    abstract public function getSite();
 
-    public abstract function getAuthor();
-    public abstract function getAddress();
-    public abstract function getTitle();
-    public abstract function getViewsCount();
-    public abstract function getAddingTime();
-    public abstract function getOkCount();
-    public abstract function getCommentsCount();
-    public abstract function getContent();
-    public abstract function getNotOkCount();
-    public abstract function getTags();
-    public abstract function getComments();
-    public abstract function getLikers();
-    public abstract function getAgeRestrictions();
-    public abstract function getDescription();
+    abstract public function getAuthor();
+
+    abstract public function getTitle();
+
+    abstract public function getViewsCount();
+
+    abstract public function getAddingTime();
+
+    abstract public function getOkCount();
+
+    abstract public function getCommentsCount();
+
+    abstract public function getContent();
+
+    abstract public function getNotOkCount();
+
+    abstract public function getTags();
+
+    abstract public function getComments();
+
+    abstract public function getLikers();
+
+    abstract public function getAgeRestrictions();
+
+    abstract public function getDescription();
 
     public function getId()
     {
