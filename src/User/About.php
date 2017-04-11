@@ -2,77 +2,31 @@
 
 namespace Joe\User;
 
-use Joe\Connection;
-use Joe\Log;
 use Joe\User;
-use simplehtmldom_1_5\simple_html_dom_node;
 
 class About
 {
-    use ClientTrait;
-
+    /** @var User */
     private $user;
 
-    /** @var $profilLeft simple_html_dom_node[] */
-    private $about;
-
-    private $content;
-    private $html;
+    private $properties;
+    private $helloMessage;
+    private $basicInfo;
+    private $categorisedInfo;
+    private $localization;
+    private $id;
 
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->client = $this->user->getClient();
-    }
-
-    public function getAllData()
-    {
-        $this->prepareAboutDOM();
-
-        $content = [];
-        $content['hello'] = $this->getHelloMessage();
-        $content['Basic'] = $this->getBasicInfo();
-        $content = array_merge($content, $this->getCategorisedInfo());
-        $content['place'] = $this->getLocalization();
-
-        return $content;
     }
 
     /**
-     * @param $dl
      * @return array
      */
-    protected function getPropertiesFromDl($dl)
+    protected function getProperties()
     {
-        $content = [];
-        $props = $dl->children();
-        foreach ($props as $prop) {
-            if ($prop->tag == 'dt') {
-                $key = $prop->text();
-            } elseif ($prop->tag == 'dd') {
-                $content[$key] = $prop->text();
-            }
-        }
-        return $content;
-    }
-
-    /**
-     * @throws \Exception
-     */
-    protected function prepareAboutDOM()
-    {
-        if (empty($this->about)) {
-            $this->html = $this->getPage(Connection::ADDRESS . '/bojownik/' . $this->user->nickName());
-
-            /** @var $profilLeft simple_html_dom_node[] */
-            $profilLeft = $this->html->find('div.profilLeft');
-
-            if (!isset($profilLeft[0])) {
-                throw new \Exception('Object containing informations was not found.');
-            }
-
-            $this->about = $profilLeft[0];
-        }
+        return $this->properties;
     }
 
     /**
@@ -80,9 +34,7 @@ class About
      */
     public function getHelloMessage()
     {
-        $this->prepareAboutDOM();
-        $innerText = $this->about->innertext();
-        return trim(strip_tags(substr($innerText, 0, strpos($innerText, '<dl>'))));
+        return $this->helloMessage;
     }
 
     /**
@@ -90,12 +42,7 @@ class About
      */
     public function getBasicInfo()
     {
-        $this->prepareAboutDOM();
-        $dls = $this->about->find('dl');
-        if (isset($dls[0])) {
-            return $this->getPropertiesFromDl($dls[0]);
-        }
-        return [];
+        return $this->basicInfo;
     }
 
     /**
@@ -103,21 +50,7 @@ class About
      */
     public function getCategorisedInfo()
     {
-        $this->prepareAboutDOM();
-        $content = [];
-        $headers = $this->about->find('h3');
-        foreach ($headers as $h) {
-            $block = $h->text();
-            /** @var $dl simple_html_dom_node */
-            $dl = $h->next_sibling();
-
-            if ($dl->tag == 'dl') {
-                $content[$block] = $this->getPropertiesFromDl($dl);
-            } else {
-                //throw new \Exception('Exception was found' . print_r($dl->outertext(), true));
-            }
-        }
-        return $content;
+        return $this->categorisedInfo;
     }
 
     /**
@@ -125,23 +58,76 @@ class About
      */
     public function getLocalization()
     {
-        $this->prepareAboutDOM();
-        $scripts = $this->about->find('script');
-        if (isset($scripts[1])) {
-            $matches = [];
-            preg_match_all('/point\.l(?:ong|at) = ([0-9]+\.[0-9]+);/', $scripts[1], $matches);
-            return  $matches[1];
-        }
-        return [];
+        return $this->localization;
     }
 
     public function getId()
     {
-        $this->prepareAboutDOM();
-        if (!isset($this->content['id'])) {
-            $id = $this->html->find('#elementid');
-            $this->content['id'] = $id[0]->value;
-        }
-        return $this->content['id'];
+        return $this->id;
     }
+
+    /**
+     * @param User $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @param mixed $properties
+     */
+    public function setProperties($properties)
+    {
+        $this->properties = $properties;
+    }
+
+    /**
+     * @param mixed $helloMessage
+     */
+    public function setHelloMessage($helloMessage)
+    {
+        $this->helloMessage = $helloMessage;
+    }
+
+    /**
+     * @param mixed $basicInfo
+     */
+    public function setBasicInfo($basicInfo)
+    {
+        $this->basicInfo = $basicInfo;
+    }
+
+    /**
+     * @param mixed $categorisedInfo
+     */
+    public function setCategorisedInfo($categorisedInfo)
+    {
+        $this->categorisedInfo = $categorisedInfo;
+    }
+
+    /**
+     * @param mixed $localization
+     */
+    public function setLocalization($localization)
+    {
+        $this->localization = $localization;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
 }
