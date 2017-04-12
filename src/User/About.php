@@ -12,19 +12,13 @@ class About
     private $properties;
     private $helloMessage;
     private $basicInfo;
-    private $categorisedInfo;
     private $localization;
     private $id;
-
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
 
     /**
      * @return array
      */
-    protected function getProperties()
+    public function getProperties()
     {
         return $this->properties;
     }
@@ -48,14 +42,6 @@ class About
     /**
      * @return mixed
      */
-    public function getCategorisedInfo()
-    {
-        return $this->categorisedInfo;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getLocalization()
     {
         return $this->localization;
@@ -68,58 +54,62 @@ class About
 
     /**
      * @param User $user
+     * @return $this
      */
     public function setUser($user)
     {
         $this->user = $user;
+        return $this;
     }
 
     /**
      * @param mixed $properties
+     * @return $this
      */
     public function setProperties($properties)
     {
         $this->properties = $properties;
+        return $this;
     }
 
     /**
      * @param mixed $helloMessage
+     * @return $this
      */
     public function setHelloMessage($helloMessage)
     {
         $this->helloMessage = $helloMessage;
+        return $this;
     }
 
     /**
      * @param mixed $basicInfo
+     * @return $this
      */
     public function setBasicInfo($basicInfo)
     {
         $this->basicInfo = $basicInfo;
-    }
-
-    /**
-     * @param mixed $categorisedInfo
-     */
-    public function setCategorisedInfo($categorisedInfo)
-    {
-        $this->categorisedInfo = $categorisedInfo;
+        return $this;
     }
 
     /**
      * @param mixed $localization
+     * @return $this
      */
     public function setLocalization($localization)
     {
         $this->localization = $localization;
+        return $this;
     }
 
     /**
      * @param mixed $id
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
     }
 
     /**
