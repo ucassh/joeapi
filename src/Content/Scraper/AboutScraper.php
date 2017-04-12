@@ -3,6 +3,7 @@
 namespace Joe\Content\Scraper;
 
 use Joe\Connection;
+use Joe\Http\Client;
 use Joe\User;
 use Joe\User\ClientTrait;
 use simplehtmldom_1_5\simple_html_dom;
@@ -15,6 +16,13 @@ class AboutScraper extends AbstractScraper
 
     /** @var  User */
     protected $id;
+
+    public function __construct($id, Client $client)
+    {
+        parent::__construct($id, $client);
+        $this->prepare();
+    }
+
 
     public function getAddress()
     {
@@ -98,6 +106,7 @@ class AboutScraper extends AbstractScraper
             if ($dl->tag == 'dl') {
                 $content[$block] = $this->getPropertiesFromDl($dl);
             } else {
+                //todo check this exception
                 //throw new \Exception('Exception was found' . print_r($dl->outertext(), true));
             }
         }
@@ -118,10 +127,15 @@ class AboutScraper extends AbstractScraper
         return [];
     }
 
-    public function getId()
+    public function getUserId()
     {
         $id = $this->html->find('#elementid');
         return $id[0]->value;
+    }
+
+    public function getUser()
+    {
+        return $this->id;
     }
 
 }
