@@ -2,6 +2,8 @@
 
 namespace Joe;
 
+use Joe\Content\Factory\AboutFactory;
+use Joe\Content\Scraper\AboutScraper;
 use Joe\Content\Scraper\FansScraper;
 use Joe\Helper\CommentsHelper;
 use Joe\User\About;
@@ -40,10 +42,13 @@ class User
         return (new CommentsHelper)->extractComments($res->getBody());
     }
 
+    /**
+     * @return About
+     */
     public function about()
     {
         if (is_null($this->about)) {
-            $this->about = new About($this);
+            $this->about = (new AboutFactory())->createFromScraper(new AboutScraper($this, $this->client));
         }
         return $this->about;
     }
@@ -61,9 +66,9 @@ class User
 
     }
 
-    public function fanOf()
+    public function fanOf($page = 1)
     {
-        return (new FansScraper($this, $this->client))->fanOf();
+        return (new FansScraper($this, $this->client))->fanOf($page);
     }
 
     public function clubs()
