@@ -36,10 +36,20 @@ class SubscriptionsScraper extends AbstractScraper
 
     public function blogSubscriptions()
     {
+        return $this->getUsersFromSection('Subskrybenci bloga', 0);
+    }
+
+    /**
+     * @param $header
+     * @param $index
+     * @return mixed
+     */
+    protected function getUsersFromSection($header, $index)
+    {
         $collecion = new \ArrayObject;
         /** @var simple_html_dom_node $node */
-        $node = $this->content->find('h2', 0);
-        if ($node && $node->text() == 'Subskrybenci bloga') {
+        $node = $this->content->find('h2', $index);
+        if ($node && $node->text() == $header) {
             /** @var simple_html_dom_node $sibling */
             $sibling = $node->nextSibling();
             foreach ($sibling->childNodes() as $child) {
