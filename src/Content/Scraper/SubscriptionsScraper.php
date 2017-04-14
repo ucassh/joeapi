@@ -34,15 +34,42 @@ class SubscriptionsScraper extends AbstractScraper
         return $node[0] ?: null;
     }
 
+    /**
+     * @return \ArrayObject
+     */
     public function blogSubscriptions()
     {
         return $this->getUsersFromSection('Subskrybenci bloga', 0);
     }
 
     /**
+     * @return \ArrayObject
+     */
+    public function wardrobeSubscriptions()
+    {
+        return $this->getUsersFromSection('Subskrybenci szaffy', 1);
+    }
+
+    /**
+     * @return \ArrayObject
+     */
+    public function subscribedBlogs()
+    {
+        return $this->getUsersFromSection('Subskrybuje bloga', 2);
+    }
+
+    /**
+     * @return \ArrayObject
+     */
+    public function subscribedWardrobes()
+    {
+        return $this->getUsersFromSection('Subskrybuje szaffę', 3);
+    }
+
+    /**
      * @param $header
      * @param $index
-     * @return mixed
+     * @return \ArrayObject
      */
     protected function getUsersFromSection($header, $index)
     {
