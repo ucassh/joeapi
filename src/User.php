@@ -3,18 +3,24 @@
 namespace Joe;
 
 use Joe\Content\Factory\AboutFactory;
+use Joe\Content\Factory\SubscriptionsContainerFactory;
 use Joe\Content\Scraper\AboutScraper;
 use Joe\Content\Scraper\FansScraper;
+use Joe\Content\Scraper\SubscriptionsScraper;
 use Joe\Helper\CommentsHelper;
 use Joe\User\About;
 use Joe\User\ClientTrait;
 use Joe\User\SendedContent;
+use Joe\User\SubscriptionsContainer;
 
 class User
 {
 
     use ClientTrait;
     private $nickName;
+
+    /** @var SubscriptionsContainer */
+    private $subscriptions;
 
     /** @var  About $about */
     private $about;
@@ -81,9 +87,16 @@ class User
 
     }
 
+    /**
+     * @return SubscriptionsContainer
+     */
     public function subscriptions()
     {
-
+        if (!$this->subscriptions) {
+            $this->subscriptions = (new SubscriptionsContainerFactory())
+                ->createFromScraper(new SubscriptionsScraper($this, $this->client));
+        }
+        return $this->subscriptions;
     }
 
     /**
