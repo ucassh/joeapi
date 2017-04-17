@@ -1,6 +1,9 @@
 <?php
 
-namespace Joe;
+namespace Joe\Club;
+
+use Joe\Club\Forum\ClubForumThreadEntity;
+use Joe\Http\Scraper\ScrapPagesInterface;
 
 class ClubEntity
 {
@@ -26,6 +29,13 @@ class ClubEntity
     private $thumbnail;
     /** @var string */
     private $description;
+
+    /** @var ScrapPagesInterface */
+    private $membersScraper;
+    /** @var ScrapPagesInterface */
+    private $forumScraper;
+    /** @var ScrapPagesInterface */
+    private $imagesScraper;
 
     /**
      * @return int
@@ -203,4 +213,54 @@ class ClubEntity
         $this->description = $description;
     }
 
+    /**
+     * @param int $page
+     * @return User[]
+     */
+    public function getMembers($page = 1)
+    {
+        $this->membersScraper->scrapPage($page);
+    }
+
+    /**
+     * @param int $page
+     * @return []
+     */
+    public function getImages($page = 1)
+    {
+        $this->imagesScraper->scrapPage($page);
+    }
+
+    /**
+     * @param int $page
+     * @return ClubForumThreadEntity[]
+     */
+    public function getForumThreads($page = 1)
+    {
+        $this->forumScraper->scrapPage($page);
+    }
+
+    /**
+     * @param ScrapPagesInterface $membersScraper
+     */
+    public function setMembersScraper($membersScraper)
+    {
+        $this->membersScraper = $membersScraper;
+    }
+
+    /**
+     * @param ScrapPagesInterface $forumScraper
+     */
+    public function setForumScraper($forumScraper)
+    {
+        $this->forumScraper = $forumScraper;
+    }
+
+    /**
+     * @param ScrapPagesInterface $imagesScraper
+     */
+    public function setImagesScraper($imagesScraper)
+    {
+        $this->imagesScraper = $imagesScraper;
+    }
 }
