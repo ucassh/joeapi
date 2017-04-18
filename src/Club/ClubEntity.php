@@ -4,6 +4,7 @@ namespace Joe\Club;
 
 use Joe\Club\Forum\ClubForumThreadEntity;
 use Joe\Http\Scraper\ScrapPagesInterface;
+use Joe\User;
 
 class ClubEntity
 {
@@ -47,10 +48,12 @@ class ClubEntity
 
     /**
      * @param int $id
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
     }
 
     /**
@@ -63,10 +66,12 @@ class ClubEntity
 
     /**
      * @param string $name
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
     }
 
     /**
@@ -79,10 +84,12 @@ class ClubEntity
 
     /**
      * @param string $type
+     * @return $this
      */
     public function setType($type)
     {
         $this->type = $type;
+        return $this;
     }
 
     /**
@@ -95,10 +102,12 @@ class ClubEntity
 
     /**
      * @param User $founder
+     * @return $this
      */
-    public function setFounder($founder)
+    public function setFounder(User $founder)
     {
         $this->founder = $founder;
+        return $this;
     }
 
     /**
@@ -111,10 +120,12 @@ class ClubEntity
 
     /**
      * @param \DateTime $created
+     * @return $this
      */
     public function setCreated($created)
     {
         $this->created = $created;
+        return $this;
     }
 
     /**
@@ -127,10 +138,12 @@ class ClubEntity
 
     /**
      * @param \DateTime $lastActivity
+     * @return $this
      */
-    public function setLastActivity($lastActivity)
+    public function setLastActivity(\DateTime $lastActivity)
     {
         $this->lastActivity = $lastActivity;
+        return $this;
     }
 
     /**
@@ -143,10 +156,12 @@ class ClubEntity
 
     /**
      * @param int $postsQuantity
+     * @return $this
      */
     public function setPostsQuantity($postsQuantity)
     {
         $this->postsQuantity = $postsQuantity;
+        return $this;
     }
 
     /**
@@ -159,10 +174,12 @@ class ClubEntity
 
     /**
      * @param int $membersQuantity
+     * @return $this
      */
     public function setMembersQuantity($membersQuantity)
     {
         $this->membersQuantity = $membersQuantity;
+        return $this;
     }
 
     /**
@@ -175,10 +192,12 @@ class ClubEntity
 
     /**
      * @param int $watched
+     * @return $this
      */
     public function setWatched($watched)
     {
         $this->watched = $watched;
+        return $this;
     }
 
     /**
@@ -191,10 +210,12 @@ class ClubEntity
 
     /**
      * @param string $thumbnail
+     * @return $this
      */
     public function setThumbnail($thumbnail)
     {
         $this->thumbnail = $thumbnail;
+        return $this;
     }
 
     /**
@@ -207,10 +228,12 @@ class ClubEntity
 
     /**
      * @param string $description
+     * @return $this
      */
     public function setDescription($description)
     {
         $this->description = $description;
+        return $this;
     }
 
     /**
@@ -242,25 +265,31 @@ class ClubEntity
 
     /**
      * @param ScrapPagesInterface $membersScraper
+     * @return $this
      */
-    public function setMembersScraper($membersScraper)
+    public function setMembersScraper(ScrapPagesInterface $membersScraper)
     {
         $this->membersScraper = $membersScraper;
+        return $this;
     }
 
     /**
      * @param ScrapPagesInterface $forumScraper
+     * @return $this
      */
-    public function setForumScraper($forumScraper)
+    public function setForumScraper(ScrapPagesInterface $forumScraper)
     {
         $this->forumScraper = $forumScraper;
+        return $this;
     }
 
     /**
      * @param ScrapPagesInterface $imagesScraper
+     * @return $this
      */
-    public function setImagesScraper($imagesScraper)
+    public function setImagesScraper(ScrapPagesInterface $imagesScraper)
     {
         $this->imagesScraper = $imagesScraper;
+        return $this;
     }
 }
