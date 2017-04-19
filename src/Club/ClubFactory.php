@@ -52,9 +52,9 @@ class ClubFactory
             'type' => $scraper->getType(),
             'watched' => $scraper->getWatched(),
             'posts_quantity' => $scraper->getPostsQuantity(),
-            'members_scraper' => new ClubMembersScraper($clubId),
-            'forum_scraper' => new ClubForumScraper($clubId),
-            'images_scraper' => new ClubImagesScraper($clubId)
+            'members_scraper' => new ClubMembersScraper($clubId, $scraper->getClient()),
+            'forum_scraper' => new ClubForumScraper($clubId, $scraper->getClient()),
+            'images_scraper' => new ClubImagesScraper($clubId, $scraper->getClient())
         ));
     }
 }
