@@ -38,4 +38,9 @@ class ClubImagesScraper extends ClubContentAbstractScraper implements ScrapPages
 
         return $return;
     }
+
+    public function maxItems()
+    {
+        return 10;
+    }
 }
