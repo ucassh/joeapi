@@ -9,6 +9,8 @@ class ClubContentAbstractScraper
 {
     use GetPageTrait;
 
+    protected $clubId;
+
     public function __construct($clubId, Client $client)
     {
         $this->clubId = $clubId;
