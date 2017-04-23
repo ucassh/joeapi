@@ -18,6 +18,7 @@ class ClubForumThreadFactory
             ->setTitle($params['title'] ?:'')
             ->setLastCommented(new \DateTime($params['last_commented'] ?:null))
             ->setLatestCommentedBy($params['last_commented_by'] ?:null)
-            ->setSnippet($params['snippet'] ?:'');
+            ->setSnippet($params['snippet'] ?:'')
+            ->setUrl($params['url'] ?:'');
     }
 }

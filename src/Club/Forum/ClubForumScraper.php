@@ -3,6 +3,7 @@
 namespace Joe\Club\Forum;
 
 use Joe\Club\ClubContentAbstractScraper;
+use Joe\Connection;
 use Joe\Http\Scraper\ScrapPagesInterface;
 use simplehtmldom_1_5\simple_html_dom_node;
 
@@ -27,12 +28,13 @@ class ClubForumScraper extends ClubContentAbstractScraper implements ScrapPagesI
                 /** @var simple_html_dom_node[] $cells */
                 $cells = $thread->find('td');
                 return $factory->create([
+                    'url' => Connection::ADDRESS . $cells[0]->childNodes(0)->href,
                     'created' => trim($cells[2]->find('span', 0)->text()),
                     'title' => trim($cells[0]->text()),
                     'username' => trim($cells[2]->find('a', 0)->text()),
-                    'last_commented' => ($span = $cells[3]->find('span', 0))? trim($span->text()):'',
-                    'last_commented_by' =>($a = $cells[3]->find('a', 0)) ? trim($a->text()) : '',
-                    'snippet' =>$cells[0]->childNodes(0)->title,
+                    'last_commented' => ($span = $cells[3]->find('span', 0)) ? trim($span->text()) : '',
+                    'last_commented_by' => ($a = $cells[3]->find('a', 0)) ? trim($a->text()) : '',
+                    'snippet' => $cells[0]->childNodes(0)->title,
                 ]);
             },
             $nodes
