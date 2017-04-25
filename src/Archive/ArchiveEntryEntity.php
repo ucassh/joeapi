@@ -14,7 +14,7 @@ class ArchiveEntryEntity
     /** @var int */
     private $okCount;
     /** @var int */
-    private $watchCount;
+    private $viewsCount;
     /** @var int */
     private $commentsCount;
 
@@ -93,18 +93,18 @@ class ArchiveEntryEntity
     /**
      * @return int
      */
-    public function getWatchCount()
+    public function getViewsCount()
     {
-        return $this->watchCount;
+        return $this->viewsCount;
     }
 
     /**
-     * @param int $watchCount
+     * @param int $viewsCount
      * @return ArchiveEntryEntity
      */
-    public function setWatchCount($watchCount)
+    public function setViewsCount($viewsCount)
     {
-        $this->watchCount = $watchCount;
+        $this->viewsCount = $viewsCount;
         return $this;
     }
 
