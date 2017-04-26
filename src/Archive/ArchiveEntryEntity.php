@@ -1,6 +1,6 @@
 <?php
 
-namespace Joe\Archieve;
+namespace Joe\Archive;
 
 //TODO migrate this into ArtSnippet (but first HARD refactor of ArtSnippet)
 class ArchiveEntryEntity

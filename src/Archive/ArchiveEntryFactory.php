@@ -1,8 +1,6 @@
 <?php
 
-namespace Joe\Club\Forum;
-
-use Joe\Archieve\ArchiveEntryEntity;
+namespace Joe\Archive;
 
 class ArchiveEntryFactory
 {
