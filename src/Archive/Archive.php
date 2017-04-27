@@ -32,6 +32,6 @@ class Archive
             $this->data[$year] = (new ArchiveScraper(null, $this->client))->scrapYear($year);
         }
 
-        $this->data[$year];
+        return $this->data[$year];
     }
 }
