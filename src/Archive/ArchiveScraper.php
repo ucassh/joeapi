@@ -27,17 +27,18 @@ class ArchiveScraper extends AbstractScraper
         $factory = new ArchiveEntryFactory();
         return array_map(
             function (simple_html_dom_node $row) use ($factory) {
-                $link = $row->find('td>a', 0);
+                $children = $row->children();
+                $link = $children[1]->find('a', 0);
                 return $factory->create([
-                    'comments_count' => trim($row->find('td', 2)->text()),
-                    'date' => trim($row->find('td', 0)->text()),
-                    'ok_count' => trim($row->find('td', 4)->text()),
-                    'views_count' => str_replace(' ', '', trim($row->find('td', 3)->text())),
+                    'comments_count' => trim($children[2]->text()),
+                    'date' => trim($children[0]->text()),
+                    'ok_count' => trim($children[4]->text()),
+                    'views_count' => str_replace(' ', '', trim($children[3]->text())),
                     'name' => trim($link->text()),
                     'url' => Connection::ADDRESS .substr($link->href, 0, strrpos($link->href, '/'))
                 ]);
             },
-            $html->find('#archiwum tbody tr')
+            $html->find('#archiwum tbody tr.lstd')
         );
     }
 }
