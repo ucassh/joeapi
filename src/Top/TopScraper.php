@@ -5,6 +5,7 @@ namespace Joe\Top;
 use Joe\Content\Scraper\AbstractScraper;
 use Joe\Type;
 use simplehtmldom_1_5\simple_html_dom;
+use simplehtmldom_1_5\simple_html_dom_node;
 
 abstract class TopScraper extends AbstractScraper
 {
@@ -44,5 +45,21 @@ abstract class TopScraper extends AbstractScraper
 
     protected function extractData(simple_html_dom $html)
     {
+        return array_map(
+            function (simple_html_dom_node $node) {
+                return array_map(
+                    function (simple_html_dom_node $li) use ($node) {
+                        return [
+                            'counter' => trim($li->text()),
+                            'title' => trim($li->find('a', 0)->text()),
+                            'thumbnail' => ($img = $li->find('a>img', 0)) ? $img->src : '',
+                            'type' => $this->getTypeById($node->id),
+                            'url' => $li->find('a', 0)->href
+                        ];
+                    },
+                    $node->next_sibling()->find('li'));
+            },
+            $html->find('h2')
+        );
     }
 }
