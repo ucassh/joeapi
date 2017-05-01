@@ -45,11 +45,12 @@ abstract class TopScraper extends AbstractScraper
 
     protected function extractData(simple_html_dom $html)
     {
-        return array_map(
-            function (simple_html_dom_node $node) {
+        $map = [];
+        array_map(
+            function (simple_html_dom_node $node) use (&$map) {
                 return array_map(
-                    function (simple_html_dom_node $li) use ($node) {
-                        return [
+                    function (simple_html_dom_node $li) use ($node, &$map) {
+                        $map[] = [
                             'counter' => trim($li->text()),
                             'title' => trim($li->find('a', 0)->text()),
                             'thumbnail' => ($img = $li->find('a>img', 0)) ? $img->src : '',
@@ -57,9 +58,12 @@ abstract class TopScraper extends AbstractScraper
                             'url' => $li->find('a', 0)->href
                         ];
                     },
-                    $node->next_sibling()->find('li'));
+                    $node->next_sibling()->find('li,LI')
+                );
             },
             $html->find('h2')
         );
+
+        return $map;
     }
 }
