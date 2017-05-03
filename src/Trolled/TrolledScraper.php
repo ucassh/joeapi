@@ -18,7 +18,12 @@ class TrolledScraper extends AbstractScraper implements ScrapPagesInterface
 
     protected function extractEntry(simple_html_dom_node $node)
     {
-        return [];
+        $description = $node->find('.talkDescription', 0)->text();
+        $astPos = strrpos($description, '*');
+        return [
+            'author' => substr($description, 12, ($astPos - 13)),
+            'date' => substr($description, $astPos + 9, 10)
+        ];
     }
 
     public function maxItems()
