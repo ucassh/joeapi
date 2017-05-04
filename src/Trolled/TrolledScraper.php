@@ -22,7 +22,8 @@ class TrolledScraper extends AbstractScraper implements ScrapPagesInterface
         $astPos = strrpos($description, '*');
         return [
             'author' => substr($description, 12, ($astPos - 13)),
-            'date' => substr($description, $astPos + 9, 10)
+            'date' => substr($description, $astPos + 9, 10),
+            'content' => trim(substr($txt = $node->text(), 0, strpos($txt, $description)))
         ];
     }
 
